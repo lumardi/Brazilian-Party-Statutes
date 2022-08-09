@@ -1,0 +1,603 @@
+---
+title: "Inovando a Cópia"
+subtitle: "Examinando estatutos partidários através da análise de similaridade textual"
+author: "Lucas Mingardi"
+date: "22/10/2020"
+fontawesome: yes
+monospace-url: yes
+spacing: double
+urlcolor: blue
+params: 
+  lang: PT
+header-includes:
+  - \usepackage{longtable}
+  - \renewcommand{\tightlist}{\setlength{\itemsep}{2.5ex}\setlength{\parskip}{0pt}}
+lang: "`r switch(params$lang, PT = 'pt-BR', EN = 'en-US')`"
+output: beamer_presentation
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+
+
+# Pacotes necessários
+pkgs <- c('tidyverse', 'here', 'tools', "lubridate", "fst",
+          'stargazer', 'knitr', 'writR',
+          'hrbrthemes', 'viridis', 
+          "dotwhisker", "ggridges", "ggiraphExtra", "gghighlight",
+          "margins", "lme4",
+          "pdftools", "tesseract", "magick","rvest",
+          "tidytext", "hunspell", "tm", "stringdist", "textclean"
+          )
+getwd()
+
+# Instala e/ou atualiza pacotes
+install_update <- function(x) {
+  if (x %in% rownames(installed.packages()) == F) {
+    install.packages(x, dependencies = T, repos = "http://cran.us.r-project.org")
+  }
+  if (x %in% rownames(old.packages() == T)) {
+    update.packages(x, repos = "http://cran.us.r-project.org")
+  }
+}
+
+# Carrega pacotes
+lapply(pkgs, require, character.only = T)
+rm(pkgs, install_update)
+
+# Criando função para fazer as tabelas do stargazer caber nos slides
+WrapPageWidthLatex <- function(InputCode){
+    OutputCode = append("\\resizebox{\\textwidth}{!}{", InputCode)
+    OutputCode = rlang::prepend("}", OutputCode)    
+    return(OutputCode)
+}
+
+
+# Abrindo banco de dados
+setwd('C:/Users/lucas/Documents/PROJECTS/!Doutorado/statute project/2 - statute-data')
+p_x_p <- read_fst("abcp_p_x_p.fst")
+statute_files <- read_fst("abcp_statute_files.fst") %>%
+  mutate(PT = ifelse(party == "PT", 1, 0)) %>%
+  filter(n_word > 300)
+
+topwords <- read_fst("abcp_topwords.fst") %>%
+  mutate(word = repair_encoding(word))
+
+```
+
+
+## Por que Estatutos Partidários? 
+>- Estatutos são "portas de entrada" para as instituições intrapartidárias. 
+>    -  Longa tradição de pesquisa, indo de Hartmann (1931) estudando os partidos da Tchecoslováquia, a Duverger (1954), Panebianco (1988), Norris (2004), Hazan (2010), van Biezen (2013), Ignazi (2014), etc. 
+>- Contra-argumento: estatutos são meras formalidades, partidos não os levam a sério; estatutos não demonstram a "real" dinâmica partidária.
+>    - Para se entender a diferença entre organizações formais e informais, é necessário se conhecer as organizações  formais previamente. (Freidenberg & Levitsky, 2007)
+>    - Brasil: caso partidos não se importassem com estatutos, não incorreriam no custo de constantemente reformá-los. Em menos de 30 anos, os atuais 35 partidos redigiram 195 estatutos. 
+
+
+## "Plágio" nos Estatutos Brasileiros
+>- **Legislação dos Estatutos Partidários no Brasil**
+>    - Pré-88: estrutura delimitada pela 5681/71 (LOPP). 
+>    - CF 88: autonomia partidária; previsão de regulamentação de estatutos em lei complementar. 
+>    - Lei dos Partidos (9096/95): partidos já registrados no TSE tinham 6 meses para enviar seus estatutos.
+>- **Ribeiro (2012)**: Leitura manual dos estatutos do PT, PSDB, PMDB e PFL/DEM, de 1995 a 2011.
+>    - "À exceção do PT (...) os documentos de diferentes partidos não só continuaram idênticos entre si em muitos trechos: eles também seguem reproduzindo exatamente artigos inteiros fornecidos pela LOPP em 1971".
+
+
+## Desenho de Pesquisa
+- **Puzzle**: apesar de serem autônomos para redigir seus estatutos, e apesar de atualizarem frequentemente seus textos, partidos mantêm a estrutura da LOPP. O que está gerando esse resultado?
+    - Viés de seleção de Ribeiro (2012)?
+    - Path Dependence da imposição da Lei Eleitoral ou da estrutura partidária anterior?
+- **Plano de Trabalho**: generalizar a análise de Ribeiro (2012) para todos os estatutos de todos os partidos brasileiros. 
+- **Universo de Pesquisa**: 195 estatutos criados por 35 partidos entre 1990 (!) e 2019. Analisamos 192 desses estatutos.
+- **Análise**: 1) comparação dos estatutos com a LOPP; 2) comparação dos estatutos entre si. 
+
+
+## Desenho de Pesquisa
+- \textbf{Problema}: quantidade de textos dificulta a  comparação manual.
+- \textbf{Solução}: ler estatutos com optical character recognition (OCR); comparar textos com análise de similaridade textual (``plágio").
+- \textbf{Limites}: 
+    - Text mining não deve ser pensado como substituto da leitura acurada dos textos. Tarefas complementares (Greener, 2003).
+    - Carimbos, assinaturas, rubricas, etc, criando ruídos na análise.
+    - Possível viés de seleção ao analisar apenas partidos contemporâneos. 
+    - Parte da similaridade é natural dado o tema comum dos textos. O que importa é a **variância** da distribuição, não o resultado pontual do texto A com o texto B. (Garett et al, 2015).
+
+
+
+## Análise de similaridade de Texto  - Questões a Considerar
+- Dimensionalidade da Análise: \textbf{Análise de Corpora}. Textos vistos como ``bag of words" e não segmentado por frases/páginas/etc (Greener \& Stewart, 2003).
+- Termo mínimo escolhido: \textbf{Análise de caracteres} (ao invés de palavras). Facilita análise para línguas aglutinativas e/ou com diacríticos, reduz necessidade pré-tratamento. Maior eficiência em comparação com similaridade de palavras (Solorio, 2015).     
+- Quantidade de termos analisados: \textbf{Bigramas e Trigramas} de termos. Cedeño \& Rosso (2009): outros valores de Q não apresentam ganho significativo. 2-grama vs 3-grama: trade-off entre recall e precisão. 
+- Pré-tratamento: \textbf{Limpeza de texto}. Stemming, remoção de stopwords, remoção de pontuações, caixa baixa. Pró: diminui necessidade computacional. Contra: perdemos precisão. "Stopwords plagiarism" (Stamatos, 2009). 
+
+
+## Um exemplo prático - Índices de Similaridade
+- Usamos dois índices de similaridade: Índice de Jaccard e Similaridade de Cosseno.
+- Suponha que temos os seguintes documentos: D1: ('a_banana') e D2: ('a_batata').
+- Criamos uma Matriz de Documentos a partir das regras que descrevemos anteriormente (bigrama de caracteres). 
+
+\begin{center}
+    \begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+  & a\_ & ba & na & ta & an & at &  \_b\\
+\hline
+D1 & 1 & 1 & 2 & 0 & 2 & 0 & 1\\
+\hline
+D2 & 1 & 1 & 0 & 2 & 0 & 2 & 1\\
+\hline
+\end{tabular}
+\end{center}
+
+Note que espaços (\_) são contados em nossos vetores como parte de nossos bi-gramas.
+
+## Um exemplo prático - Jaccard
+- \textbf{Jaccard}: "Intersecção pela união". $$ J(A,\ B)\ =\ \frac{(A \cap B)}{(A \cup B)} $$
+- Para o Índice de Jaccard apenas contamos a ocorrência de cada termo, i.e. não nos importa a frequência dos termos. 
+- Comparando D1 e D2 temos: $$J(D1,\ D2)\ =\ \frac{\text{Termos em Comum}}{\text{Total}}\ = \frac{3}{7}\ =\ 0.42 $$
+
+
+## Um exemplo prático - Cosseno
+- \textbf{Cosseno}: "Cosseno da frequência dos vetores". $$     cos(A,\ B)\ =\ \frac{A.B}{\parallel A \parallel \parallel B \parallel}\ $$
+- Para a Similaridade de Cosseno a frequência de cada termo importa.
+- Comparando D1 e D2 temos: $$ cos(D1,\ D2)\ =\ \frac{\Sigma_{i=j=1}^{n}{D1_i *  D2_j} }{ (\Sigma_{i=1}^{n}{D1_i^2})^{1/2}*(\Sigma_{j=1}^{n}{D2_j^2})^{1/2}} =\ 0.27$$
+
+    
+## Breve Análise Descritiva - Número de Estatutos por Partido
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <- statute_files %>%
+  count(party, sort = T)
+
+aux %>%
+  ggplot(aes(x = reorder(party, n), y = n)) +
+  geom_col() +
+  labs(x = "",y = "") +
+  coord_flip() +
+  scale_y_continuous(breaks = 0:17) + 
+  theme(
+    panel.background = element_rect(fill = "white", color = "black"),
+    panel.grid.major = element_line(color = "grey"),
+    legend.position = "none",
+    axis.text.y = element_text(size = 15),
+    axis.text.x = element_text(size = 18)
+  )
+
+```
+
+
+
+## Breve Análise Descritiva - Número de Estatutos por Ano
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <-  statute_files %>%
+  group_by(year_statute) %>%
+  summarise(n = n()) %>%
+  full_join(., tibble(year_statute = 1992:2018)) %>%
+  mutate(n = ifelse(is.na(n), 0, n))
+
+aux %>%
+  ggplot() +
+  geom_line(aes(x = year_statute, y = n), size = 1.2) +
+  scale_x_continuous(breaks = 1992:2018) + 
+  labs(x = NULL, y = NULL) +
+  theme(
+    panel.background = element_rect(fill = "white", color = "black"),
+    panel.grid.major = element_line(color = "grey"),
+    legend.position = "none",
+    axis.text.y = element_text(size = 15),
+    axis.text.x = element_text(size = 16, angle = 90, hjust = 1)
+  )
+
+```
+
+
+
+## Breve Análise Descritiva - Número de Estatutos por Ano: Partido Estreante vs Estabelecido
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <- statute_files %>%
+  group_by(new_party, year_statute) %>%
+  summarise(n = n()) %>%
+  full_join(., tibble(
+    year_statute = c(1992:2018, 1992:2018),
+  new_party = c(rep(0, each = 27), rep(1, each = 27)))) %>%
+  distinct() %>%
+  ungroup() %>%
+  mutate(n = ifelse(is.na(n), 0, n),
+         new_party = as.character(new_party),
+         new_party = recode(new_party, "0" = "Partido Estabelecido",
+                                       "1" = "Partido Estreante")
+         ) 
+  
+aux %>%
+  ggplot(aes(x = year_statute, y = n, group = new_party, linetype = new_party, fill = new_party)) +
+  geom_line(size = 1.2) +
+  scale_x_continuous(breaks = 1992:2018) + 
+  labs(x = "", y = "", fill = "", linetype = "") + 
+  theme(
+    panel.background = element_rect(fill = "white", color = "black"),
+    panel.grid.major = element_line(color = "grey"),
+    axis.text.y = element_text(size = 15),
+    axis.text.x = element_text(size = 16, angle = 90, hjust = 1),
+    legend.position = "bottom",
+    legend.text = element_text(size = 15)
+  ) 
+
+
+```
+
+
+## Breve Análise Descritiva - Número Médio de Palavras nos Estatutos por Ano
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <- statute_files %>%
+  group_by(year_statute) %>%
+  summarise(
+    mean_n_word = mean(n_word, na.rm = T),
+    sd = sd(n_word, na.rm = T),
+    median_n_word = median(n_word, na.rm = T)) %>%
+  full_join(., tibble(year_statute = 1992:2018)) %>%
+  mutate(
+    `Média` = ifelse(is.na(mean_n_word), 0, mean_n_word),
+    sd = ifelse(is.na(sd), mean_n_word, sd),
+    Mediana = ifelse(is.na(median_n_word), 0, median_n_word)) 
+
+aux_linetype <- c("Média" = "solid", "Mediana" = "dotdash")
+
+  
+ggplot(data=aux) +
+  geom_ribbon(aes(x = year_statute, y = `Média`,
+                  ymin = `Média` - sd, ymax = `Média` + sd), alpha = 0.2) + 
+  geom_line(aes(x = year_statute, y = `Média`, linetype = "Média"), size = 1) +
+  geom_line(aes(x = year_statute, y = `Média` - sd), size = 0.4, linetype = "dashed", alpha = 0.4) +
+  geom_line(aes(x = year_statute, y = `Média` + sd), size = 0.4, linetype = "dashed", alpha = 0.4) +
+  geom_line(aes(x = year_statute, y = Mediana, linetype = "Mediana"), size = 1) + 
+  scale_x_continuous(breaks = 1992:2018) + 
+  labs(x = "", y = "", fill = "", linetype = "") +
+  scale_color_manual(values = aux_linetype) +
+  theme(
+    panel.background = element_rect(fill = "white", color = "black"),
+    panel.grid.major = element_line(color = "grey"),
+    axis.text.y = element_text(size = 15),
+    axis.text.x = element_text(size = 16, angle = 90, hjust = 1),
+    legend.position = "bottom",
+    legend.text = element_text(size = 15)
+  ) 
+
+
+```
+
+
+## Breve Análise Descritiva - Palavras mais comuns nos Estatutos
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+topwords %>%
+  ggplot(aes(reorder(word, n), n)) +
+  geom_col() +
+  labs(
+    x = NULL,
+    y = NULL
+  ) +
+  coord_flip() +
+  theme(
+    panel.background = element_rect(fill = "white", color = "black"),
+    panel.grid.major = element_line(color = "grey"),
+    legend.title = element_blank(),
+    legend.position = "none",
+    axis.text.y = element_text(size = 18),
+    axis.text.x = element_text(size = 15)
+  )
+
+
+```
+
+## Modelo 1 Estatuto x LOPP - Densidade Kernel Taxa Similaridade
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+aux <- statute_files %>%
+  ungroup() %>%
+  select(jaccard_char_q2_lopp, jaccard_char_q3_lopp, cosine_char_q2_lopp, cosine_char_q3_lopp) %>%
+  pivot_longer(cols = c("jaccard_char_q2_lopp", "jaccard_char_q3_lopp",
+                        "cosine_char_q2_lopp", "cosine_char_q3_lopp")) %>%
+  mutate(name = recode(name,
+                       "jaccard_char_q2_lopp" = "Jaccard Bigrama",
+                       "jaccard_char_q3_lopp" = "Jaccard Trigrama",
+                       "cosine_char_q2_lopp" = "Cosseno Bigrama",
+                       "cosine_char_q3_lopp" = "Cosseno Trigrama"
+                       ))
+
+aux %>% 
+  ggplot(aes(x = value, fill = name)) + 
+  geom_density() + 
+  facet_wrap(~name) + 
+  scale_color_viridis(discrete = T) + 
+  labs(x = "",
+       y = "") + 
+  theme_minimal() %+replace%
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        strip.text = element_text(size = 18),
+        legend.position = "none")
+
+```
+
+## Modelo 1 Estatuto x LOPP - Boxplots Taxa Similaridade por Partido
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <- statute_files %>%
+  ungroup() %>%
+  select(jaccard_char_q2_lopp, jaccard_char_q3_lopp, cosine_char_q2_lopp, cosine_char_q3_lopp, party) %>%
+  pivot_longer(cols = c("jaccard_char_q2_lopp", "jaccard_char_q3_lopp",
+                        "cosine_char_q2_lopp", "cosine_char_q3_lopp")) %>%
+  mutate(name = recode(name,
+                       "jaccard_char_q2_lopp" = "Jaccard Bigrama",
+                       "jaccard_char_q3_lopp" = "Jaccard Trigrama",
+                       "cosine_char_q2_lopp" = "Cosseno Bigrama",
+                       "cosine_char_q3_lopp" = "Cosseno Trigrama"),
+         party = reorder_within(party, value, name)
+         )
+         
+
+aux %>%
+  ggplot(aes(x = party, y = value, color = name, fill = name)) + 
+  geom_boxplot(outlier.shape = 16, outlier.size=2, notch=FALSE, alpha = 0.5) + 
+  scale_x_reordered() +
+  labs(x = NULL, y = NULL) + 
+  facet_wrap(~name, scales = "free") + 
+  gghighlight(party %in%  c("PSDB___Jaccard Bigrama", "PSDB___Jaccard Trigrama",
+                            "PSDB___Cosseno Bigrama","PSDB___Cosseno Trigrama",
+                            "PT___Jaccard Bigrama", "PT___Jaccard Trigrama",
+                            "PT___Cosseno Bigrama","PT___Cosseno Trigrama",
+                            "MDB___Jaccard Bigrama", "MDB___Jaccard Trigrama",
+                            "MDB___Cosseno Bigrama","MDB___Cosseno Trigrama",
+                            "DEM___Jaccard Bigrama", "DEM___Jaccard Trigrama",
+                            "DEM___Cosseno Bigrama","DEM___Cosseno Trigrama"),
+              calculate_per_facet = T) + 
+  theme_minimal() %+replace%
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size = 11),
+        axis.text.y = element_text(vjust = 0.5, hjust=1, size = 15),
+        strip.text = element_text(size = 18),
+        legend.position = "none")
+
+
+```
+
+
+## Modelo 1 Estatuto x LOPP - Estimação OLS
+
+- Modelo:  $Similaridade_{(a,lopp)} = \beta_0 +\ \beta_1Lag(Similaridade_{(a,lopp)})\ +\  \beta_2Ano\ do\ Estatuto\ +\  \beta_3Ano\ Fundação\ do\ Partido\ +\ \beta_4Ideologia\ +\ \beta_5PT\ +\ \epsilon$ 
+- 4 VDs: 2-Jaccard, 3-Jaccard, 2-Cosseno, 3-Cosseno
+- Testaremos futuramente com modelos hierárquicos. Dummy provisória para o PT. 
+- Lags: Problemas teóricos: o que estimamos não é o mesmo que a teoria subjacente. Rever modelo(?)
+- Data Fundação do Partido: partidos mais antigos com maior probabilidade de ter path dependence.
+- Data criação do estatuto: estatutos criados  próximos de 1995 tinham maior pressão de entregar um estatuto para competir eleitoralmente. 
+
+
+## Modelo 1 Estatuto x LOPP - Estimação OLS
+
+
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE,results='asis', scalebox='0.1'}
+
+jaccard_char_q2_lopp_model <- lm(jaccard_char_q2_lopp ~ jaccard_q2_lopp_lag + standard_yr + standard_yr_found + ideology + PT, data = statute_files)
+
+cosine_char_q2_lopp_model <- lm(cosine_char_q2_lopp ~ cosine_q2_lopp_lag + standard_yr + standard_yr_found + ideology + PT, data = statute_files)
+
+jaccard_char_q3_lopp_model <- lm(jaccard_char_q3_lopp ~ jaccard_q3_lopp_lag + standard_yr + standard_yr_found + ideology + PT, data = statute_files)
+
+cosine_char_q3_lopp_model <- lm(cosine_char_q3_lopp ~ cosine_q3_lopp_lag + standard_yr + standard_yr_found + ideology + PT, data = statute_files)
+
+
+cat(
+    WrapPageWidthLatex(
+        capture.output(
+stargazer(jaccard_char_q2_lopp_model, jaccard_char_q3_lopp_model, cosine_char_q2_lopp_model, cosine_char_q3_lopp_model,
+  header = F,
+  dep.var.labels = c("J2", "J3", "C2", "C3"),
+  omit.stat = c("LL", "ser", "f"),
+  no.space = T,
+  covariate.labels = c("Lag J2", "Lag J3", "Lag C2", "Lag C3", "Ano de Edição do Estatuto", "Ano de Fundação do Partido", "Partido de Esquerda", "Partido de Direita", "PT"),
+  font.size="tiny", 
+  column.sep.width = "0pt", 
+  float = FALSE, 
+  type="latex")
+)))    
+
+
+```
+
+## Modelo 2 Estatuto x Estatuto - Densidade Kernel 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <- p_x_p %>%
+  ungroup() %>%
+  select(jaccard_char_q2_party, jaccard_char_q3_party, cosine_char_q2_party, cosine_char_q3_party) %>%
+  pivot_longer(cols = c("jaccard_char_q2_party", "jaccard_char_q3_party",
+                        "cosine_char_q2_party", "cosine_char_q3_party")) %>%
+  mutate(name = recode(name,
+                       "jaccard_char_q2_party" = "Jaccard Bigrama",
+                       "jaccard_char_q3_party" = "Jaccard Trigrama",
+                       "cosine_char_q2_party" = "Cosseno Bigrama",
+                       "cosine_char_q3_party" = "Cosseno Trigrama"
+                       ))
+
+aux %>% 
+  ggplot(aes(x = value, fill = name)) + 
+  geom_density() + 
+  facet_wrap(~name) + 
+  scale_color_viridis(discrete = T) + 
+  labs(x = "",
+       y = "") + 
+  theme_minimal() %+replace%
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        strip.text = element_text(size = 18),
+        legend.position = "none")
+
+
+```
+
+## Modelo 2 Estatuto x Estatuto - Heatmap Jaccard Trigrama 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+aux <- p_x_p %>%
+  group_by(party_1, party_2) %>%
+  summarise(
+    mean_jaccard_q2_party = mean(jaccard_char_q2_party, na.rm = T),
+    mean_jaccard_q3_party = mean(jaccard_char_q3_party, na.rm = T),
+    mean_cosine_q2_party = mean(cosine_char_q2_party, na.rm = T),
+    mean_cosine_q3_party = mean(cosine_char_q3_party, na.rm = T))
+
+aux %>%
+  ggplot(., aes(x = party_1, y = party_2, fill = mean_jaccard_q3_party)) +
+  geom_tile(colour = "white") +
+  scale_fill_gradient(low = "yellow", high = "red") +
+  gghighlight() + 
+  labs(x = "", y = "", fill = "Média de Jaccard 3-grama") +
+  theme(
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 15),
+    legend.justification = "right",
+    axis.text.y = element_text(size = 15),
+    axis.text.x = element_text(size = 15, angle = 90)
+  )
+
+
+```
+
+## Modelo 2 Estatuto x Estatuto - Estimação OLS
+
+- Modelo:  $Similaridade_{(a,b)} = \beta_0 + \beta_1Lag(Similaridade_{(a,b)})\ +\ \beta_2Diff\ Ano\ Estatuto_{(a,b)}\ +\ \beta_3Diff\ Fundação\ Partido_{(a,b)}\ +\ \beta_5Mesmo Partido\ +\ \beta_5Ideologia_a\ +\ \beta_6Ideologia_b\ +\ \beta7Ideologia_a\ *\ Ideologia_b\ +\ \epsilon$
+- 4 VDs: 2-Jaccard, 3-Jaccard, 2-Cosseno, 3-Cosseno
+- $\beta_2Diff\ Fundação\ Partido_{(a,b)}$: Partidos criados em épocas semelhantes podem ser organizacionalmente mais próximos entre si.
+- $\beta_1Diff\ Ano\ Estatuto_{(a,b)}$: estatutos criados em épocas semelhantes podem sofrer influências semelhantes. 
+- $\beta_5Mesmo Partido$: Dummy para $Partido_a = Partido_b$
+- Interação entre ideologia $Partido_a$ e $Partido_b$
+
+
+## Modelo 2 Estatuto x Estatuto - Estimação OLS
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE,eval=F}
+jaccard_char_q2_party_model <- lm(jaccard_char_q2_party ~ jaccard_q2_party_lag + ideology_1 * ideology_2 + same_party + year_statute_diff + year_foundation_diff, data = p_x_p)
+
+jaccard_char_q3_party_model <- lm(jaccard_char_q3_party ~ jaccard_q3_party_lag + ideology_1 * ideology_2 + same_party + year_statute_diff + year_foundation_diff, data = p_x_p)
+
+cosine_char_q2_party_model <- lm(cosine_char_q2_party ~ cosine_q2_party_lag + ideology_1 * ideology_2 + same_party + year_statute_diff + year_foundation_diff, data = p_x_p)
+
+cosine_char_q3_party_model <- lm(cosine_char_q3_party ~ cosine_q3_party_lag + ideology_1 * ideology_2 + same_party + year_statute_diff + year_foundation_diff, data = p_x_p)
+
+
+
+cat(
+    WrapPageWidthLatex(
+        capture.output(
+stargazer(jaccard_char_q2_party_model, jaccard_char_q3_party_model, cosine_char_q2_party_model, cosine_char_q3_party_model,
+  header = F,
+  dep.var.labels = c("J2", "J3", "C2", "C3"),
+  omit.stat = c("LL", "ser", "f"),
+  no.space = T,
+  covariate.labels = c("Lag J2", "Lag J3", "Lag C2", "Lag C3", "Ideologia de Esquerda A", "Ideologia de Direita A", "Ideologia de Esquerda B", "Ideologia de Direita B", "Mesmo Partido", "Diff. Ano Estatuto", "Diff. Ano Fundação dos Partidos", "Esquerda * Esquerda", "Direita * Esquerda", "Esquerda * Direita", "Direita * Direita"),
+  font.size="tiny", 
+  column.sep.width = "0pt", 
+  float = FALSE, 
+  type="latex")
+))) 
+
+
+```
+
+
+\begingroup 
+\tiny 
+\begin{tabular}{@{\extracolsep{0pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & J2 & J3 & C2 & C3 \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ Lag J2 & 0.324$^{***}$ &  &  &  \\ 
+  & (0.005) &  &  &  \\ 
+  Lag J3 &  & 0.382$^{***}$ &  &  \\ 
+  &  & (0.005) &  &  \\ 
+  Lag C2 &  &  & 0.274$^{***}$ &  \\ 
+  &  &  & (0.005) &  \\ 
+  Lag C3 &  &  &  & 0.336$^{***}$ \\ 
+  &  &  &  & (0.005) \\ 
+  Ideologia de Esquerda A & $-$0.001 & $-$0.002 & $-$0.0005 & $-$0.004 \\ 
+  & (0.003) & (0.003) & (0.002) & (0.003) \\ 
+  Ideologia de Direita A & $-$0.010$^{***}$ & $-$0.011$^{***}$ & $-$0.001 & 0.0002 \\ 
+  & (0.002) & (0.002) & (0.002) & (0.003) \\ 
+  Ideologia de Esquerda B & $-$0.001 & $-$0.002 & 0.004 & $-$0.002 \\ 
+  & (0.003) & (0.003) & (0.002) & (0.003) \\ 
+  Ideologia de Direita B & $-$0.011$^{***}$ & $-$0.013$^{***}$ & $-$0.002 & $-$0.0001 \\ 
+  & (0.002) & (0.002) & (0.002) & (0.003) \\ 
+  Mesmo Partido & 0.021$^{***}$ & 0.051$^{***}$ & 0.013$^{***}$ & 0.036$^{***}$ \\ 
+  & (0.003) & (0.003) & (0.003) & (0.003) \\ 
+  Diff. Ano Estatuto & $-$0.001$^{***}$ & $-$0.001$^{***}$ & 0.0004$^{***}$ & 0.0001 \\ 
+  & (0.0001) & (0.0001) & (0.0001) & (0.0001) \\ 
+  Diff. Ano Fundação dos Partidos & 0.00002 & 0.001$^{***}$ & 0.001$^{***}$ & 0.001$^{***}$ \\ 
+  & (0.0001) & (0.0001) & (0.0001) & (0.0001) \\ 
+  (cont.) \\
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\endgroup 
+
+
+## Modelo 2 Estatuto x Estatuto - Estimação OLS
+\begingroup 
+\tiny 
+\begin{tabular}{@{\extracolsep{0pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & J2 & J3 & C2 & C3 \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+  (cont.) \\
+  Diff. Ano Fundação dos Partidos & 0.00002 & 0.001$^{***}$ & 0.001$^{***}$ & 0.001$^{***}$ \\ 
+  & (0.0001) & (0.0001) & (0.0001) & (0.0001) \\ 
+  Esquerda * Esquerda & 0.015$^{***}$ & 0.012$^{***}$ & 0.002 & 0.011$^{**}$ \\ 
+  & (0.004) & (0.004) & (0.004) & (0.005) \\ 
+  Direita * Esquerda & 0.007$^{**}$ & 0.004 & 0.001 & $-$0.0003 \\ 
+  & (0.003) & (0.003) & (0.003) & (0.004) \\ 
+  Esquerda * Direita & 0.007$^{**}$ & 0.005 & 0.001 & $-$0.001 \\ 
+  & (0.003) & (0.003) & (0.003) & (0.004) \\ 
+  Direita * Direita & 0.006$^{**}$ & 0.007$^{**}$ & 0.0001 & 0.001 \\ 
+  & (0.003) & (0.003) & (0.002) & (0.003) \\ 
+  Constant & 0.444$^{***}$ & 0.318$^{***}$ & 0.688$^{***}$ & 0.579$^{***}$ \\ 
+  & (0.004) & (0.003) & (0.005) & (0.005) \\ 
+ \hline \\[-1.8ex] 
+Observations & 36,121 & 36,121 & 36,121 & 36,121 \\ 
+R$^{2}$ & 0.123 & 0.178 & 0.082 & 0.126 \\ 
+Adjusted R$^{2}$ & 0.123 & 0.178 & 0.081 & 0.126 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\endgroup 
+
+
+## Conclusões Provisórias
+- Estatutos importam: quantidade de estatutos redigidos; regularidade da redação com o período eleitoral. 
+- Tendência geral é de estatutos ficarem cada vez mais diferentes e mais extensos com o passar do ano. 
+- O Ano em que o estatuto foi redigido importa para ambos os modelos. Seu poder preditivo, contudo, é bem baixo. 
+- Excepcionalismo petista? PT não é o único diferente da LOPP. Há partidos novos/velhos, de esquerda/direita, pequenos/grandes que possuem índices de similaridade menores que o PT. 
+- Lição mais geral para estudos de partidos no Brasil: evitar recortes a partir dos "partidos mais relevantes". 
+
+## Próximos Passos
+- Diminuir ruídos do OCR.
+- Melhorar índices de plágio: unificar índices? mais índices?
+- Modelo muito primário: reespecificar nosso modelo. Explorar modelos hierárquicos por partido. 
+- Retrabalhar variáveis derivadas de partido: até agora parecem pouco significativas teórica e empiricamente.
+- Incluir partidos extintos na análise, testar recodificação da legenda para nomes antigos (eg: PFL e DEM). 
+- Investigar melhor relação temporal dos estatutos. 
+
+
