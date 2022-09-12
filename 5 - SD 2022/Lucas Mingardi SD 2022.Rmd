@@ -1,0 +1,276 @@
+---
+title: "As regras internas de alteração das estruturas partidárias em perspectiva comparada[^1]"
+author: "Lucas Mingardi"
+date: 2021
+abstract: "Apesar  dos estatutos serem amplamente reconhecidos como fonte primária de pesquisa, poucos são os estudos que se dedicam a analisar a edição do texto partidário como uma instituição política em si. Como @smith2010understanding argumentam, tal desfalque se daria, em parte, pela inclinação da literatura em se manter em uma debate da diferença entre as instituições 'formais' e 'reais' dos partidos. Assim, demos compreender os estatutos como variáveis textuais discretas, cuja alteração e redação é resultado de um equilíbrio de pressões internas e externas aos partidos. No presente artigo investigamos os dispositivos de mudança da estrutura organizativa dos 33 partidos brasileiros contemporâneos. Para tal, analisamos as regras formais descritas nos estatutos partidários quanto à alteração dos estatutos, bem como a fusão, incorporação e dissolução dos partidos. Seguindo trabalhos prévios (@ribeiro2013organizaccao, @mingardi2019avaliando) argumentamos que a Lei 5.682/1971 (LOPP) foi marcante para a redação dos estatutos dos partidos pós-redemocratização. Concluímos que mesmo quanto ao nosso recorte específico cerca de metade dos estatutos seguem exatamente a estrutura organizativa originária da LOPP. Conjecturamos se as alterações pontuais dos demais partidos não podem ser vistas como resposta à LOPP diante das demandas exigidas aos dirigentes partidários. Sugerimos passos futuros da inclusão de um componente temporal à presente análise, incluindo-se as edições anteriores dos estatutos."
+fontawesome: yes
+monospace-url: yes
+bibliography: references.bib
+csl: csl-apa-6th-edition.csl
+urlcolor: blue
+header-includes: |
+   ```{=latex}
+   \usepackage[brazil]{babel}
+   \usepackage{float}
+   \floatplacement{figure}{H}
+   \usepackage{pdflscape}
+   \usepackage[fontsize=14pt]{scrextend}
+   \setlength\parindent{24pt}
+   \usepackage{dcolumn}
+   ```
+params: 
+  lang: PT
+output:
+  bookdown::pdf_document2:
+    latex_engine: xelatex
+    fig_caption: yes
+    number_sections: no
+    toc: false
+    keep_tex: no
+---
+
+<style>
+p.caption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;  
+  text-align: justify;
+}
+</style>
+
+
+```{r setup, include=FALSE, echo=F,warning=F,message=F}
+# Opções do knitr
+knitr::opts_chunk$set(echo = F,warning=F,message=F,
+                      fig.pos = "H", fig.align = "center"
+                      )
+
+# Pacotes necessários
+pkgs <- c('tidyverse',"data.table" ,'here', 'tools',
+          'hrbrthemes', 'viridis', 'stargazer', 'knitr',
+          'kableExtra','patchwork')
+
+# Instala e/ou atualiza pacotes
+install_update <- function(x) {
+  if (x %in% rownames(installed.packages()) == F) {
+    install.packages(x, dependencies = T,
+          repos = "http://cran.us.r-project.org")
+  }
+}
+
+# Carrega pacotes
+lapply(pkgs, require, character.only = T)
+rm(pkgs, install_update)
+
+  
+```
+
+[^1]: Trabalho em andamento apresentado no XII Seminário Discente do programa de pós-graduação em ciência política da USP, ocorrido no segundo semestre de 2022. Favor não citar sem a expressa autorização do autor. 
+
+\newpage
+
+<!-- # Introdução  -->
+<!-- Defendemos que mais do que meros veículos de registro informacional, estatutos são, antes de mais nada, documentos políticos independentes, portanto passíveis de serem estudados como objeto próprio de pesquisa. A desatenção da literatura quanto a este problema resultou em sabermos muito pouco acerca de como se dá o processo de criação e de transformação dos estatutos partidários. -->
+
+<!-- O presente estudo, dessa forma  -->
+
+
+# A importância do estudo de estatutos partidários
+
+A utilização dos estatutos partidários como fonte primária de pesquisa é extremamente comum na literatura de organização partidária. Todavia, há certa tensão entre a literatura e os estatutos partidários: são raras exceções os estudos que analisam sistematicamente os estatutos partidários, e não como uma simples fonte de pesquisa. Isto é, é comum estudar-se a organização partidária _através_ dos estatutos, mas raros são as pesquisas que estudam _os_ estatutos.
+
+Para @panebianco2005modelos [p.87], por exemplo, os estatutos partidários seriam "pálidos vestígios" do funcionamento "real" da organização partidária. Para esse tipo de argumento, vemos que os estatutos seriam uma descrição incompleta da realidade partidária visto que não capturaria outros fenômenos importantes como instituições informais (@norris2004building), por vezes omissos de documentos mais formais como um dispositivo estratégico (@freidenberg2007organizacion). Um pouco mais favorável seria o ponto de @katz1992the, argumentando que normas oficiais serviriam ao menos para moldar as perspectivas dos agentes políticos. Mesmo assim, partilham os autores da opinião de que o estudo dos estatutos seria insuficiente, necessitando-se de fontes secundárias de estudo para se obter um quadro mais completo da estrutura organizativa (@katz1992the [pp.7-8]). 
+
+O principal problema de tal linha de pensamento está na forma em que os estatutos partidários são percebidos. Busca a literatura utilizar os estatutos sobretudo como fonte de pesquisa, e não como objeto de estudo per si. Realmente, chega a ser trivial concluir-se que, caso o pesquisador deseje compreender a estrutura dos partidos políticos de uma forma holística, a leitura de seus estatutos partidários seria insuficiente para se alcançar tal objetivo. Por mais que sejam reeditados, os estatutos partidários seriam incapazes de capturar a constante dinâmica das organizações partidárias. Isto não faz com que, por outro lado, os registros encontrados nos estatutos partidários sejam menos "reais" do que a dinâmica partidária como um todo. Tratam-se, antes de mais nada, de objetos de estudo distintos. 
+
+Tampouco devemos entender os estatutos partidários meramente como apetrechos utilizados para cumprir certas obrigações normativas e legais. Tomando emprestado um argumento que fizemos outrora em @mingardi2019avaliando, caso os estatutos fossem criados meramente para cumprir com tais deveres extra-partidários, seria de se esperar que o número de alterações estatutárias fosse mínimo, uma vez que o custo de alteração seria não nulo. Todavia, conforme olhamos para os dados, vemos que os atuais 32 partidos criaram quase 190 estatutos distintos desde a redemocratização do país. Dado esse alto volume de produção, seria improvável esperar que o único motivo de criação dos estatutos seja para atender os critérios de formação dos partidos políticos impostos por lei. Em mesmo artigo, chegamos a propor que há também uma gradual alteração substantiva dos estatutos brasileiros. Utilizando métodos de análise de similaridade textual, percebemos que, em média, conforme o passar dos anos os estatutos partidários aumenta-se a extensão dos documentos dos estatutos bem como mais estes passam a se desassemelhar. Tais achados parecem ir de encontro ao recente estudo de @scarrow2022party, que ao analisar 303 estatutos de 49 países distintos encontram uma forte associação positiva entre a extensão dos documentos estatutários e diferentes mensurações de institucionalização partidária.  
+
+Com perspectiva teórica similar, @smith2010understanding argumentam que reduzir os estatutos partidários à condição de mera "história oficialista" dos partidos acaba por obscurecer o real sentido político dos estatutos enquanto instituições. Dessa forma, identificam os autores cinco grandes imperativos que os partidos buscam resolver através de seus estatutos: i) a necessidade de satisfazer requerimentos legais (especialmente aqueles ligados ao financiamento público de campanha); ii) a necessidade de expor os princípios ideológicos que guiam o partido; iii) a necessidade de conferir legitimidade às decisões partidárias; iv) a necessidade de administrar o conflito interno do partido; e v) a necessidade de responder à competição partidária externa (@smith2010understanding [pp.3-4]). 
+
+Expandindo esse argumento, devemos compreender a edição de um estatuto partidário como um esforço coordenativo, temporalmente circunscrito, entre os diversos atores partidários, que buscam não só desenvolver seus próprios interesses, mas também atender pressões externas e internas de diversos níveis. Em outras palavras, para nos atermos à terminologia de @panebianco2005modelos, podemos afirmar que os estatutos partidários são per si uma arena de disputa de preferências no interior dos partidos. Como posto já por @panebianco2005modelos, o momento de registro do estatuto partidário, associado intrinsicamente com o período de formação do partido político enquanto organização, restringe em certo grau possíveis escolhas futuras dos agentes partidários; isto é, a partir do estatuto partidário inicial engendra-se certo _path dependence_ que pode conter maior ou menor elasticidade a depender do contexto político local. 
+
+
+# A alteração da estrutura organizativa como objeto de pesquisa
+
+Todavia, a contribuição mais interessante de @smith2010understanding foi notar a importância teórica da alteração do conteúdo estatutário dos partidos. Como vimos, o argumento central dos atores seria que o estatuto de um partido é um equilíbrio de diferentes forças políticas tão somente temporariamente circunscrito. Dessa forma, conforme novas pressões políticas venham surgindo, também se aumenta a probabilidade de que os atores partidários venham a discutir novas retificações de seus estatutos. É justamente este ponto que pretendemos contribuir substantivamente com nossa pesquisa. Uma vez constatada a importância teórica e prática da alteração estatutária, seria importante estudar justamente os processos legais no interior dos partidos que permite que tais alterações venham a ocorrer. Isto é, analisaremos quais as regras do jogo descritas para legitimar a alteração de suas estruturas organizativas, que tipo de alterações organizativas são possíveis de se fazer, quão permissivas são, bem como a quem é autorizado a fazer tais alterações.
+
+Acreditamos que o caso brasileiro se mostra extremamente propício para este tipo de análise. O primeiro motivo para tal já foi esboçado anteriormente, a alta fragmentação partidária somada a constante alteração estatutária provê um volume de dados pouco encontrado em outros lugares. Similarmente, conforme é obrigação dos partidos brasileiros enviar ao Tribunal Superior Eleitoral (TSE) quaisquer mudanças estatutárias que porventura venham a fazer, isto faz com que seja muito mais simples o processo de coleta de dados. Porém, o fato mais interessante de se notar do caso brasileiro é consequência, em parte, do próprio processo de institucionalização do sistema democrático como um todo (@barbosa2017novos, @barreto2018novos). Somado à alta fragmentação partidária, à centralização da face do partido perante o governo, bem como à influência de modelos estatutários anteriores, fez com que fosse disseminado pelos estatutos dos partidos contemporâneos um amplo detalhamento das regras de decisão quanto à própria extinção do partido político. 
+
+De certa forma, podemos entender a alteração estatutária e a extinção do partido como fazendo parte de um mesmo _continuum_: 
+
+é possível alterar uma organização indo desde substituir certas instituições menores até, no limite, a própria extinção da organização como um todo. Assim, para comprendermos a mudança organizativa dos partidos políticos brasileiros, devemos nos debruçar não só nos processos de alteração de suas estruturas organizativas internas, isto é, o emendamento estatutário, mas também analisar os procedimentos pelos quais os membros alteram a estrutura partidária como um todo.
+
+<!-- # lmm: truncado, melhorar -->
+
+Dessa forma, analisaremos quatro tópicos de alteração da estrutura organizativa partidária, tendo em vista o marco teórico-legal brasileiro: a alteração estatutária, bem como a fusão, incorporação e extinção do partido. 
+
+
+
+Somos levados a ter expectativas teóricas de que partidos seriam mais abertos quanto ao processo de emendamento dos estatutos, como forma de se manter abertos às demandas internas e externas, como argumentado por @smith2010understanding. Conversamente, esperamos que a decisão pela dissolução completa do partido siga critérios mais rígidos de decisão, dado o custo elevado associado à extinção do partido. Claro, em última análise a escolha por tais regras dependeria da estrutura organizativa geral do partido, bem como as próprias preferências de seus membros.  <!-- # lmm: truncado, melhorar -->
+
+
+# A LOPP como modelo originário dos estatutos partidários contemporâneos
+
+Como argumenta @ribeiro2013organizaccao, um importante marco nas estruturas partidárias brasileiras teria sido a forma pela qual o regime militar interviu no modo de organização dos partidos políticos. Originalmente publicada pela Lei 5.682/1971 e com mudanças significativas realizadas pela Lei 6.767/1979, a Lei Orgânica dos Partidos Políticos (popularmente conhecida pela alcunha LOPP) determinava a estrutura interna dos partidos brasileiros, tendo perdurado de 1971 até 1995, com a introdução da Lei 9.096/1995 (Lei dos Partidos Políticos). 
+
+Como avaliam @ribeiro2013organizaccao e @rodrigues2021organizac, a LOPP possuía uma estrutura interna muito rígida, forçando os partidos políticos brasileiros a adotarem estrutura organizativa formal muito semelhante entre si. Tal influência, todavia, não necessariamente deve ser visto como uma imposição _externa_ aos partidos políticos, pelo menos no que diz respeito especificamente ao sistema partidário do duopólio ARENA-MDB do regime militar. Não obstante, como argumenta @ribeiro2013organizaccao, o que a LOPP teria feito, na prática, seria oficializar um arranjo institucional que já vigorava desde então na ARENA e no MDB. Tal arranjo institucional de intensa federalização combinada com a baixa inclusão do poder decisão, observa o autor, seria historicamente arraigado nos arranjos dos partidos brasileiros, sendo igualmente presente, por exemplo, na estrutura organizativa do PSD e da UDN (@ribeiro2013organizaccao [pp.234-235]). A LOPP  estaria, dessa forma, legitimando externamente um arranjo organizativo previamente estruturado pelos partidos vigentes. 
+
+Independentemente da origem das estruturas organizativas descritas na LOPP, vemos que sua influência teria se extendido para muito além de seu período de vigência. Visando ajustar as regras de organização partidária com os princípios de liberdade de organização estabelecidos pela Constituição Federal de 1988^[Segundo a Capítulo V, artigo 17, inciso IV, parágrafo 1º da CF 88: "É assegurada aos partidos políticos autonomia para definir sua estrutura interna e estabelecer regras sobre escolha, formação e duração de seus órgãos permanentes e provisórios e sobre sua organização e funcionamento e para adotar os critérios de escolha e o regime de suas coligações nas eleições majoritárias".], a Lei 9.096/1995 removeu as barreiras institucionais da estrutura organizativa dos partidos, garantindo-lhes plena liberdade para criar sua estrutura interna de decisão.  Todavia, conforme observa @ribeiro2013organizaccao, apesar dos partidos serem a partir de então autônomos para decidir acerca de sua estrutura decisória, grande parte dos partidos pelo autor analisados teriam mantido a estrutura organizativa básica da LOPP. Observa o autor que a semelhança dos estatutos para com a extinta LOPP seria tamanha que trechos inteiros da LOPP poderiam ser encontrados em seus respectivos estatutos.
+
+Autores como @panebianco2005modelos [pp.92:93] e @mayer2011partidos [p.36] apontam como a origem dos partidos políticos impacta no tipo de estrutura organizativa utilizada. Para @mayer2011partidos, assim, ao obrigar os partidos políticos a seguirem uma estrutura organizativa pré-determinada, isso faria com que partidos de origens distintas passem a ter em teoria organizações idênticas, alterando o curso natural que seguiriam. Para @panebianco2005modelos [pp.99:102], a origem do partido desempenharia papel fundamental na origem do mesmo, visto que ainda estaria em processo de institucionalização. Parafraseando o autor, podemos dizer que a origem dos partidos tem efeito mediado nos mesmos, afetando tanto suas metas ideológicas quanto a certos tipos de estruturas organizativas que o partido tenderá a seguir.
+
+Seguindo os achados de @ribeiro2013organizaccao, dessa forma, argumentamos que a LOPP pode ser vista, de forma abrangente, como um modelo originário dos partidos brasileiros contemporâneos. Cabe aqui a observação de que tal efeito de influência de um documento político se tornando um marco para documentos subsequentes é fato conhecimento em outras esferas de conhecimento da ciência política. Autores como @sajo1992preferred e  @osiatynski2003paradoxes, por exemplo, observam o fenômeno de "empréstimo constitucional" (_constitutional borrowing_), em que a depender da proximidade (territorial, cultural, etc) de um país faz com que pegue emprestado modelos constitucionais encontrados em outros países. Tal empréstimo institucional, como apontam @smith2010understanding, não necessariamente se dá de forma direta ou mesmo positiva. É possível se encontrar casos de exemplos negativos, onde organizações deliberadamente decidem criar modelos institucionais opostos a exemplos anteriores. 
+
+Seja como for, temos três motivos principais para acreditar na hipótese de empréstimo institucional da LOPP. Primeiramente, como anteriormente apontado, muito embora a Constituição de 1988 garantisse autonomia dos partidos, a lei específica que trata da organização partidária (i.e., a Lei 9096/95) teria surgido somente dezessete anos a promulgação da Constituição. Dessa forma, os partidos políticos que surgiram durante o período de redemocratização do Brasil tiveram que, no início de sua formação, seguir a estrutura organizativa desenhada no regime militar. Em segundo lugar, temos o fato de que a Lei 9096/95, uma vez promulgada, outorgou um tempo de adaptação relativamente curto aos partidos brasileiros, sob pena dos mesmos serem impedidos de participar das eleições subsequentes. Dessa forma, não é impossível de se imaginar um cenário em que alguns partidos, em um primeiro instante, preferem adotar estruturas organizativas previamente conhecidas de forma a se adequar à nova legislação. Finalmente, podemos constatar certo continuismo das estruturas partidárias brasileiras mesmo após as quebras do sistema partidário brasileiro advinda da transição de regimes. Como o próprio @ribeiro2013organizaccao observa, da mesma forma que podemos observar certa similaridade das estruturas organizativas da ARENA e do MDB e de partidos como o PSD e UDN da República de 1945-1964, também é verdade que partidos como o PMDB-MDB, PFL-DEM e o PSDB têm origem claramente marcada como sendo uma continuação dos partidos vigentes no período militar. 
+
+Não esperamos, no entanto, que a influência da LOPP tenha sido uniforme ao longo dos partidos brasileiros contemporâneos. Como o próprio @ribeiro2013organizaccao argumenta analisando o caso petista, por exemplo, vemos que uma combinação da origem externa ao parlamento do PT aliado às mudanças estatutárias como resposta a pressões exteriores protagonizadas pela cúpula nacional garantiram ao PT uma estrutura organizativa singular quando comparada à LOPP. Similarmente, utilizando técnicas de comparação de similaridade textual, vimos em trabalho anterior @mingardi2019avaliando que independentemente da origem do partido, os partidos políticos brasileiros no geral mostram uma tendência de diminuição da sua similaridade com a LOPP conforme vão reeditando seus estatutos ao mesmo tempo. 
+
+Feita essa ressalva, argumentamos ainda assim que a LOPP seja peça fundamental para entender a estrutura organizativa dos partidos brasileiros. Dada a importância originária de sua estrutura para o sistema partidário brasileiro de forma geral, podemos afirmar que caso uma pesquisa deseje analisar analisar os partidos brasileiros em sua totalidade não há como deixar de se incluir em sua análise a forma pela qual a LOPP organiza os dispositivos institucionais estudados. Como veremos em nossa análise das regras de mudança da organização partidária dos partidos brasileiros, de certa forma podemos entender as estruturas organizativas escolhidas pelos mesmos como resposta à estrutura original proposta pela LOPP. 
+
+
+# Estudo comparativo das regras de alteração organizativa dos partidos contemporâneos
+
+Reiterando o plano de investigação descrito em nossas seções teóricas, analisaremos a estrutura organizativa dos 32 partidos brasileiros contemporâneos e da LOPP no que diz respeito ao processo de alteração das estruturas organizativas dos partidos. Para tal, analisaremos comparativamente as regras de alteração dos estatutos, bem como as regras quanto à fusão, incorporação e dissolução dos partidos. Mais recentemente, também foi engendrada pela Lei 14.208/21 a possibilidade da criação de federações de partidos. Todavia, até o presente momento o único partido que contém em seu estatuto condições claras para a federalização de seu partido foi o Partido da Mulher Brasileira (PMB)^[A título de observação, a federação partidária é mencionada nos estatutos de 2016 e 2019 do PMB.], e dessa forma optamos por omitir a análise de tal dispositivo. 
+
+Como evidenciado pela Tabela \@ref(tab:regras), um primeiro passo de nossa análise seria observar que nem todo partido possui em seus estatutos procedimentos claros acerca da mudança institucional. Ao todo, 7 dos 34 partidos estudados não apresentam ao menos uma regra de mudança institucional: MDB, PCO, PCdoB, PMN, PT, PSOL e UP. O caso mais marcante aqui seria o do estatuto do PCO, que não apresenta sequer um dispositivo de mudança institucional. É possível que a não atenção de seus líderes partidários em não estabelecer regras de mudança institucional possa explicar o fato de que em seus 26 anos de operação, o PCO nunca tenha alterado seu estatuto partidário. Outro fato a se notar seria que, olhando para um espectro ideológico de esquerda-direita dos partidos (@maciel2018partidos,@bolognesi2019conhecendo), o MDB e o PMN seriam os únicos partidos não posicionados à esquerda do espectro político a ter algum tipo de regra de mudança institucional não regulamentada. Por fim, podemos notar que a idade do partido não necessariamente gera um conjunto de regras de mudança institucional mais claro, visto que o recém estabelecido UP não possui regras tanto de incorporação quanto de dissolução do partido. 
+
+
+```{r regras}
+dat = read_csv("dados/regras.csv")
+
+kable(dat,
+      caption = "Regras faltantes de Estatutos dos Partidos Brasileiros") %>%
+  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+Já a Tabela \@ref(tab:conv) analisa o _locus_ em que a mudança institucional ocorre. Embora a cada partido brasileiro tenha uma estrutura organizativa particular, certos elementos gerais podem ser percebidos. Especificamente, os partidos brasileiros em sua totalidade têm uma divisão federativa de seus Diretórios Partidários (nacional, estadual, municipal e, em certos partidos, zonal), sendo a estância máxima de deliberação em cada estância federativa as Convenções Partidárias, cujas regras de participação e de composição dos membros variam caso a caso. Normalmente, as Convenções têm periodicidade regular de sua ocorrência, cabendo ao partido regular em seus estatutos as instâncias em que a criação de Convenções excepcionais podem ser criadas para se debater temas de urgência aos filiados.
+
+Como podemos ver pela Tabela \@ref(tab:conv), todos os partidos analisados requerem que mudança institucionais sejam feitas única e exclusivamente no órgão máximo de deliberação dos partidos, a Convenção Nacional^[Pequenas exceções devem ser apontadas. Para o PRTB, a Comissão Executiva Nacional tem a prerrogativa de propor a alteração estatutária, mas a deliberação da alteração do estatuto, bem como tanto a proposição quanto a deliberação da fusão, incorporação e dissolução do partido são feitas pela Convenção Nacional. Similarmente, a Democracia Cristã (DC) flexibiliza as regras de proposição (mas não de deliberação) dos estatutos, podendo ser feita em Convenção Nacional, ou pelo Diretório Nacional, ou por 1/3 das Comissões Estaduais, ou por 300 filiados distribuidos por 1/3 dos estados do território nacional. O PATRIOTA, por fim, requer para a deliberação (mas não para a proposição) da fusão, incorporação ou dissolução do partido a anuência escrita do Presidente e do Vice-Presidente nacional do partido além da aprovação de maioria simples dos convencionados. Todos os demais partidos possuem a Convenção Nacional como órgão máximo de deliberação do partido, cuja proposição e/ou deliberação da alteração organizativa se dão exclusivamente neste.]. Tal prerrogativa seria exclusividade também na LOPP, contudo não podemos estabelecer aqui uma conexão causal dos partidos estarem se inspirando na mesma. Dada a significância que tais mudanças engedram, seria pouco provável que os partidos dessem prerrogativas às suas instâncias subnacionais a regular tais conjuntos de regras.
+
+Mais interessante de se notar seria analisar quais partidos exigem a criação de uma Convenção Nacional Extraordinária para exclusivamente tratar da mudança institucional. Teoricamente, esperamos que quanto mais extrema for a mudança institucional, maior os incentivos do partido para exigir uma convenção extraordinária do tema. Dessa forma, esperaríamos que menos partidos dediquem exclusividade à alteração dos estatutos, com maiores critérios seguindo da fusão e incorporação dos partidos e, por fim, com regras mais rígidas para a dissolução dos mesmos. Analisando a segunda linha da Tabela \@ref(tab:conv), vemos que parece haver um "núcleo duro" de partidos que exigem a criação de Convenções Especiais, sendo composto pelo PCB, PMB, PSB e, parcialmente, pelo PV e UP.
+
+Conforme nossas expectativas, um maior número de partidos requerem a Convenção Extraordinária especificamente para tratar da dissolução do que da fusão/incorporação, incluindo-se ao núcleo duro o PRTB, o PSTU, o PT e o SD. Entretanto, ao analisar os critérios de alteração estatutária, vemos que a realidade dos partidos brasileiros não se conforma exatamente com nossas expectativas. Dessa forma, o NOVO, PATRI e PROS seriam casos excepcionais, criando maiores barreiras para a mudança dos estatutos, mas não para as demais mudanças institucionais, enquanto que o PSTU e SD requerem a criação de Convenções Especiais para a alteração estatutária e para dissolução do partido somente, não exigindo-as para a fusão ou incorporação do partido^[É possível que análises mais profundas da organização da estrutura de poder dos diretórios nacionais de tais partidos possam explicar a particularidade desses casos. Como este não é o tema específico do presente artigo, análises futuras deverão testar tal hipótese.]. Por fim, podemos observar a particularidade da REDE, que além de exigir que a mudança institucional seja feita durante a Convenção Nacional, requer também que tal mudança seja ratificada por um referendo consultando a totalidade de seus membros. 
+
+
+```{r conv}
+dat = read_csv("dados/convencao.csv")
+
+kable(dat,
+      caption = "Locus de Discussão de Alteração do Partido ou Estatuto",
+     booktabs=F,escape=F,format = "latex") %>%
+  column_spec(1:5,width = "3cm") %>%
+  footnote(symbol = c("O Encontro Nacional é equivalente à Convenção Nacional para o PT. A Convenção Nacional no PSOL, REDE e UP recebe a denominação de Congresso Nacional."),
+           threeparttable = TRUE) %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+Passamos agora a analisar a **regra de maioria** utilizada para aprovar a mudança institucional, representado pelas Tabelas \@ref(tab:majest), \@ref(tab:majfusinc) e \@ref(tab:majdis). Diferentemente do que vimos com o _locus_ de decisão, nossa hipótese da ordenação das mudanças institucionais parece se confirmar quando analisamos as distintas regras de maioria utilizadas pelos partidos brasileiros. De fato, parece haver uma relação clara aqui, com regras mais flexíveis sendo dedicadas à alteração dos estatutos, regras intermediárias para a fusão e incorporação dos partidos e, por fim, regras rígidas para determinar a dissolução do partido^[Um fato a se notar é que nenhum estatuto assinala regras de maioria distintas para a fusão ou incorporação dos partidos, muito embora a legislação não os obriguem a assim fazê-lo.]. Exemplificando nosso argumento, vemos que enquanto três partidos (PATRI, PSTU, SD) requerem somente uma maioria simples para alterar seu estatuto, somente o PSTU utiliza tal medida para decidir pela fusão ou incorporação do partido, bem como não há nenhum partido que utilize tal medida para decidir pela sua dissolução. Conversamente, enquanto que a regra mais rígida de alteração do estatuto seria do PDT (vide a Tabela \@ref(tab:majest)), requerendo a maioria absoluta de 3/5 dos convencionais, o PSC requer haja um consenso da totalidade de seus convencionais para decidir em favor ou não da dissolução de seu partido (vide a Tabela \@ref(tab:majdis)). 
+
+Outra maneira de se olhar para tais dados seria contrastá-los com a legislação prevista na LOPP. Ao olharmos para a moda do tipo de regra de maioria, percebe-se que parte substantiva dos partidos brasileiros parecem seguir a estrutura organizativa criada no período militar. Por exemplo, quanto à alteração dos estatutos, vemos pela Tabela \@ref(tab:majest) que 19 dos 33 partidos (cerca de 57.58%) usam o critério de maioria absoluta, seguindo o esquema organizativo instituído pela LOPP. Por outro lado, 4 partidos (12.12%) escolheram regras menos rígidas que a da LOPP, enquanto que 8 partidos (24.25%) optaram por regras mais rígidas. Já na Tabela \@ref(tab:majfusinc) conclui-se que os partidos brasileiros seguem em menor grau a regulamentação da LOPP no que diz respeito às regras de fusão ou incorporação dos partidos, com 10 partidos (30.3%) utilizando a regra de 2/3 absoluto ditada pela LOPP, enquanto que 14 partidos (42.42%) preferem regras mais flexíveis e 4 partidos (12.12%) regras mais rígidas. Por fim, analisando as regras de dissolução do partido, vemos na Tabela \@ref(tab:majdis) que 12 dos 33 partidos (36.36%) seguem a recomendação de 2/3 absolutos da LOPP, enquanto que 11 partidos (33.33%) seguem regras mais flexíveis e 6 partidos (18.18%) regras mais rígidas.
+
+É importante frisar o caso excepcional do PSOL, que o torna difícil de classificar em nosso esquema proposto. Para cada uma das quatro mudanças institucionais aqui analisadas, o PSOL exige que seja feita uma Convenção Nacional Extraordinária anterior compactuando os critérios de decisão utilizados em Convenção seguinte que enfim define pela mudança institucional. Se, por um lado, o critério de decisão dessa convenção anterior é nitidamente flexível, requerendo apenas um quórum de 1/3 dos convencionais e decidindo por maioria simples, é fato que os convencionais ali reunidos podem acordar por uma regra de maioria tão flexível ou rígida quanto os convém. 
+
+Resumindo nossos achados quanto à regra de maioria, temos: para a alteração estatutária, a grande maioria dos partidos seguem a LOPP, com uma minoria significativa tendo regras mais rígidas; para a fusão/incorporação dos partidos, uma pequena minoria segue a LOPP, contra a esmagadora maioria dos partidos com regras mais rígidas; por fim, para a dissolução dos partidos, haveria um empate técnico entre partidos que seguem a LOPP e partidos com regras mais flexíveis. No futuro, pretendemos fazer análises empíricas mais profundas quanto a distribuição das regras e quanto cada uma desas alterações organizativas se deram de fato. Por ora, podemos observar que apesar de a dissolução dos partidos ter sofrido a maior alteração, em comparação com a regra originária da LOPP, desde a redemocratização os casos de dissolução partidária foram somente advindos de pressões externas quanto a regras de regulamentação de seu registro, preferindo os partidos em declínio a se fundir ou serem incorporados por outras siglas. 
+
+
+```{r majest}
+dat = read_csv("dados/maiora_estatuto.csv")
+
+kable(dat,
+      caption = "Regra de Maioria para Alteração de Estatuto") %>%
+  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+```{r majfusinc}
+dat = read_csv("dados/maiora_fusao_incorporacao.csv")
+
+kable(dat,
+      caption = "Regra de Maioria para Fusão ou Incorporação de Partido") %>%
+  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+```{r majdis}
+dat = read_csv("dados/maiora_dissolucao.csv")
+
+kable(dat,
+      caption = "Regra de Maioria para Dissolução de Partido") %>%
+  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+\newpage
+
+Por fim, o último critério que podemos analisar é quanto ao **tipo de voto** utilizado para decidir acerca da mudança institucional, cujos nossos resultados podem ser vistos na Tabela \@ref(tab:vototipo). Similar ao ocorrido com o tipo de maioria, apesar de ser teoricamente possível utilizar critérios distintos a depender do tipo de mudança institucional, os partidos brasileiros optaram por simplificar o processo de decisão, utilizando somente um único critério de voto para todas as quatro mudanças institucionais analisadas.
+
+Analisando os estatutos brasileiros, observamos três características distintas que o voto individual pode possuir: i) se o voto é **A**berto (A) ou **S**ecreto (S); ii) se é permitida (C) ou não (N) a a**C**umulação de votos para convencionais que desempenham mais de uma função pelo partido; e iii) se é permitido (P) ou não (N) se ausentar da Convenção e enviar seu voto por **P**rocuração. Em nenhum caso é utilizado os mecanismos de voto indireto ou em bloco.
+
+Com isso, temos 8 tipos de votos ideais de mudança institucional dos partidos brasileiros. Destes, apenas o voto de tipo SNP (isto é, secreto, não permitida a acumulação de votos, permitida a procuração) não é encontrado nos partidos brasileiros, com os demais sendo encontrados em distinto grau. Para além desses oito primeiros tipos ideais, incluímos ainda os partidos cuja informação é **I**ncompleta (I), i.e. onde existe confirmação da existência de ao menos um dispositivo de mudança institucional, cujo critério de votação contudo não é especificado; além do caso em que não há nenhum tipo de mudança institucional estipulada pelo estatuto (tipo ideal: NA). Na prática, encontramos com isso mais quatro tipos de voto: SCI, INN, III e NA, que combinados totalizam 9 partidos (27.28% de nosso universo de análise). Por fim, dois partidos fugiram de nosso sistema de classificação, resultando na criação de tipos ideais a eles únicos. Incluiriam-se em tais casos o já mencionado PSOL, cujo **R**egimento da convenção de mudança institucional é acordado por Convenção Nacional prévia (tipo ideal: R); bem como o PSL, cujo **P**residente do Diretório Nacional tem a prerrogativa de decidir se o voto será aberto ou fechado (tipo ideal: P). Na Tabela \@ref(tab:vototipo), colocamos ainda em notas de rodapé demais informações relevantes, engedrando alterações de equilíbrio significativas.
+
+Diferentemente do que vimos tanto com o _locus_ de discussão^[Vide Tabela \@ref(tab:conv).], quanto com a regra de maioria^[Vide as Tabelas \@ref(tab:majest), \@ref(tab:majfusinc) e \@ref(tab:majdis).], à primeira vista os partidos políticos contemporâneos não parecem seguir tão claramente a LOPP na formação de seu tipo de voto. Analisando a Tabela \@ref(tab:vototipo), vemos que o tipo de voto do período militar era o SCN, sendo utilizado por apenas 5 partidos brasileiros contemporâneos^[Curiosamente, dois desses partidos (nominalmente, DEM e PP) possuem um processo de formação mais estreitamente relacionado à antiga ARENA.]: AVANTE, DEM, PROS, PSD, PP. De fato, a moda do tipo de voto seria um empate entre SCN (utilizado pela LOPP e demais partidos mencionados), e ANP (CIDADANIA, PCB, PCdoB, PMN e PSDB). Substantivamente, a única diferença de tal tipos de voto seria preferir um sistema de voto aberto ao invés do voto secreto. Em seguida, temos dois outros grandes blocos de tipos ideais de voto, ACN (PATRI, PRTB, SD e PDT) e SNN (DC, UP, PSC, PTC), cujos sistemas concordam entre si na proibição do voto por procuração. Por fim, é curioso notar como o completo oposto do sistema SCN da LOPP, isto é, o sistema ANP, seria utilizado em somente um único partido brasileiro, PODEMOS. 
+
+Uma maneira mais simples de olharmos para os dados do tipo de voto seria desagregarmos as três variáveis utilizadas para criar nosso tipo ideal de votação. Os resultados de tal procedimento podem ser vistos na Tabela \@ref(tab:votofreq). Quanto à abertura do voto, vemos que os partidos brasileiros estão bem divididos, com 12 partidos permitindo o voto secreto e 12 proibindo-o. Situação similar ocorre com a acumulação de votos, com 14 partidos permitindo o voto cumulativo e 12 proibindo a acumulação. Por fim, analisando a permissão pela procuração do voto vemos uma preferência muito clara dos partidos brasileiros pela proibição do mesmo, com 20 partidos expressamente proibindo a procuração contra apenas 5 que a permite. Ou seja, diferentemente do quadro anterior, vemos um cenário muito mais similar à LOPP do que a separação completa dos tipos ideais nos faz deduzir em um primeiro olhar. Em outras palavras, podemos concluir que parcela significativa dos partidos cujas informações conseguimos extrair possuem sistemas de voto razoavelmente similares aos propostos pela LOPP, sendo que 15 dos 27 partidos com informação^[Isto é, excluídos os partidos de voto do tipo III e NA.] (55.55%) possuem 2 ou mais critérios do tipo de voto idênticos aos da LOPP. 
+
+\newpage
+
+```{r vototipo}
+dat = read_csv("dados/voto_tipos.csv") 
+
+kable(dat,
+      caption = "Estatutos Partidários por Tipo de Voto",
+      booktabs=F,escape=F,format = "latex") %>%
+  column_spec(1:2,width = "8cm") %>%
+  footnote(alphabet = c("Presidente DN com voto de Minerva.",
+                      "Pode-se acumular até 2 votos somente.",
+                      "Possibilidade de aclamação, caso haja consenso.",
+                      "Permite declaração individual do voto."
+                      )) %>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+```{r votofreq}
+dat = read_csv("dados/voto_freq.csv")
+
+kable(dat,align = "c",
+      caption = "Frequência dos Tipos de Voto") %>%
+  column_spec(1:2,width = "7cm")
+
+```
+
+# Considerações Finais e Passos Futuros
+
+Para @smith2010understanding ao invés de tratar os estatutos partidários como meras descrições das estruturas organizativas dos partidos, devemos entendê-los como instituições políticas de per si, cuja redação final é fruto do equilíbrio de interesses entre diversos agentes reagindo a pressões internas e externas ao partido. Dessa forma, deixamos de cair na armadilha teórica bem comum na literatura (e.g., @panebianco2005modelos @katz1992the @norris2004building) de comparar a estrutura "formal" dos estatutos partidários com a "real" estrutura organizativa dos partidos políticos. Expandimos a definição de @smith2010understanding, argumentando que caso queiramos investigar a fundo o processo de geração dos estatutos partidários, devemos seguir o procedimento metodológico para documentos textuais descrito por @grimmer2013text, e tratar os estatutos como variáveis aleatórias discretas. 
+
+No presente artigo focamos em uma única dimensão de análise dos estatutos partidários, analisando as regras para a alteração da estrutura organizativa dos partidos políticos. Para tal, utilizamos o caso brasileiro, estudando seus 33 partidos contemporâneos. Definimos como alteração da estrutura organizativa o conjunto de regras que descreve não só só a alteração estatutária dos partidos, mas também a fusão, incorporação e dissolução dos mesmos. Tal conceituação se mostra especialmente, mas não exclusivamente, necessária para a análise do contexto brasileiro pós-redemocratização, uma vez que a consolidação do sistema partidário brasileiro trouxe consigo nas últimas décadas um processo dinâmico de surgimento e extinção de legendas partidárias. 
+
+Seguindo as conclusões de trabalhos prévios (@ribeiro2013organizaccao, @mingardi2019avaliando), argumentamos que a Lei Orgânica dos Partidos Políticos (Lei 5.682/1971), que regulamentava a atividade intrapartidária no período militar, mostra-se como um importante marco institucional para os estatutos contemporâneos. Apesar de tanto a Constituição Federal de 1988 quanto a atual Lei dos Partidos (Lei 9.096/1995) garantirem plena liberdade aos partidos de organizarem-se internamente, a estrutura dos partidos brasileiros continua sendo, em grande parte, similar à organização imposta pela LOPP. De acordo com @ribeiro2013organizaccao [p. 238], "os documentos de diferentes partidos não só continuaram idênticos entre si em muitos trechos: eles também seguem reproduzindo exatamente capítulos inteiros fornecidos pela LOPP em 1971".
+
+Verificamos que os estatutos brasileiros variam seu conjunto de regras de mudança organizativa em quatro dimensões: i) a existência ou não de regras explícitas para a alteração da estrutura organizativa; ii) o _locus_ de legitimação da alteração; iii) a regra de maioria escolhida para aprovação; iv) particularidades do voto individual dos convencionais. Para todos os casos analisados, a estrutura organizativa dos partidos é federativa, cuja instituição máxima de decisão seria a Convenção Nacional.
+
+Quanto à primeira dimensão, apenas 7 dos 33 partidos não possuem descrição explícita de ao menos uma regra de alteração organizativa. Já para o _locus_ de discussão, os partidos usualmente seguem a estrutura da LOPP de realizar em convenções nacionais regulares, com uma significativa minoria (11 partidos) exigindo uma convenção nacional extraordinária em ao menos um aspecto de mudança organizativa. A exigência de convenções extraordinárias, curiosamente, é menos comum para a decisão acerca da fusão ou da incorporação do partido do que para a alteração estatutária.
+
+Para a terceira dimensão verificamos dissociação variável dos partidos das regras originárias da LOPP. Enquanto que pare a alteração estatutária a maioria dos partidos seguem a estrutura da LOPP, os partidos brasileiros preferem majoritariamente regras mais rígidas do que as da LOPP para a fusão e incorporação, sendo igualmente divididos entre regras mais flexíveis, idênticas ou mais rígidas quanto a dissolução do partido.  Por fim, a quarta e última dimensão trata do tipo de voto do convencional, podendo variar em três categorias: voto secreto ou aberto, voto cumulativo ou individual, voto por procuração ou exclusivamente presencial. Quando analisamos a variância institucional considerando as três categorias conjuntamente encontramos grande variância. Apesar de diminuto em seu número absoluto, a combinação recomendada pela LOPP de voto secreto, cumulativo e sem procuração é a moda dos estatutos brasileiros. Similarmente, a maioria dos estatutos brasileiros possui duas ou mais categorias de voto idênticas à da LOPP. 
+
+Nossa conclusão parcial é que a hipótese da literatura da similaridade dos estatutos para com a LOPP parece correta mesmo com nosso escopo analítico mais limitado. Para cada uma das dimensões analisadas, pelo menos metade dos estatutos partidários seguem à risca a estrutura organizativa descrita na LOPP. Mesmo para os casos desviantes as alterações são pontuais, quiçá insinuando resposta direta à estrutura originária da LOPP. Como vimos em trabalhos anterior (@mingardi2019avaliando), a similaridade textual dos estatutos brasileiros para com a LOPP vem diminuindo conforme suas reedições. Tal hipótese iria ao encontro da hipótese mais geral de @smith2010understanding, com os dirigentes brasileiros adaptando seus estatutos ao longo dos anos. Dessa forma, uma possível sequência em nossos estudos seria analisar se as primeiras edições dos estatutos brasileiros eram mais similares à LOPP. 
+
+
+\newpage
+# Bibliografia
+
+
+<!-- #End of File -->
