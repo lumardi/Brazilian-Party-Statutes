@@ -1,17 +1,17 @@
 Regra de Maioria,Estatuto,Fusão/Incorporação,Dissolução
 Maioria Simples,"PATRI, PSTU, SD",PSTU,PP
 Quórum 30% + Maioria Simples,PP,PP,.
-Maioria Absoluta,"LOPP, CID, DC, DEM, MDB, PCB, PCdoB, PL, PMN, PODE, PRTB, PSB, PSD, PSDB, PSL, PT, PTB, PV, REP, UP","LOPP, DEM, MDB, PATRI, PSD, PSDB, PTB, REP","DEM, MDB, PATRI, PCdoB, PSD, PSDB, PTB, REP"
+Maioria Absoluta,"LOPP, CID, DC, MDB, PCB, PCdoB, PL, PMN, PODE, PRTB, PSB, PSD, PSDB, PT, PTB, PV, REP, UP","LOPP, MDB, PATRI, PSD, PSDB, PTB, REP","MDB, PATRI, PCdoB, PSD, PSDB, PTB, REP"
 "Quórum Maioria Absoluta, 60% Aprovação",.,PV,PV
 Maioria Absoluta Em 2 Votações,.,PODE,PODE
 Maioria Absoluta + 1/5 Assinaturas Fundadores,.,PRTB,.
 2/3 Simples,PTC,PTC,.
-2/3 Absoluto,"AVANTE, PMB, PSC","AVANTE, CID, DC, PCB, PMB, PROS, PSB, PSC, PSL, SD, UP","LOPP, AVANTE, CID, DC, PCB, PMB, PROS, PSB, PSL, PSTU, PT, PTC, SD"
+2/3 Absoluto,"AVANTE, PMB, PSC","AVANTE, CID, DC, PCB, PMB, PROS, PSB, PSC, SD, UP","LOPP, AVANTE, CID, DC, PCB, PMB, PROS, PSB, PSTU, PT, PTC, SD"
 Maioria Absoluta para criação Convenção. 2/3 Absoluto para Aprovação,PROS,.,.
 2/3 Absoluto + Maioria Simples de Referendo,REDE,REDE,REDE
 2/3 Absoluto + 2/3 Assinaturas Fundadores,.,.,PRTB
 3/4 Absoluto,NOVO,PL,PL
-3/5 Absoluto,PDT,.,PDT
+3/5 Absoluto,"PDT, UNIAO",UNIAO,"PDT, UNIAO"
 4/5 Simples,.,NOVO,NOVO
 "Quórum 1/3, Regra Escolhida em Convenção Anterior",PSOL,PSOL,.
 Consenso,.,.,PSC

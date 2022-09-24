@@ -1,0 +1,13 @@
+Tipo de Voto,Partido
+"Aberto, Cumulativo, Procuração (ACP)","PL, REP"
+"Aberto, Cumulativo, Sem Procuração (ACN)","PATRI, PRTB, SD, PDT"
+"Aberto, Não Cumulativo, Procuração (ANP)",PODE
+"Aberto, Não Cumulativo, Sem Procuração (ANN)","CID, PCB, PCdoB, PMN, PSDB"
+"Secreto, Cumulativo, Procuração (SCP)",PMB
+"Secreto, Cumulativo, Sem Procuração (SCN)","LOPP, AVANTE, PROS, PSD, PP"
+"Secreto, Não Cumulativo, Sem Procuração (SNN)","DC, UP, UNIAO, PSC, PTC"
+"Secreto, Cumulativo, Sem Info. Procuração (SCI)",MDB
+"Sem Info. Aberto/Secreto, Não Cumulativo, Sem Procuração (INN)",PTB
+Regimento Acordado em Convenção Anterior (R),PSOL
+Sem Informação (III),"NOVO, PSB, PSTU, PT, PV, REDE"
+Não Possui Dispositivo (NA),PCO

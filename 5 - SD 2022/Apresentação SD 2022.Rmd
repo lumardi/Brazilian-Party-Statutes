@@ -1,0 +1,467 @@
+---
+title: "Uma Breve Proposta de Avaliação das Regras de Mudança Institucional dos Partidos Brasileiros<br><br><br><br>"
+subtitle: "XII Seminário Discente do programa de pós-graduação em ciência política da USP"
+author: "Lucas Mingardi<br><br>"
+date: "28/09/2022"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      beforeInit: "macros.js"
+      highlightStyle: github
+      ratio: 16:10
+      titleSlideClass: [middle, left]
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+
+# Opções do knitr
+knitr::opts_chunk$set(echo = F,warning=F,message=F,
+                      fig.pos = "H", fig.align = "center"
+                      )
+
+# Pacotes necessários
+pkgs <- c('tidyverse',"data.table" , 'tools', 'tidytext', 'fst',
+          'hrbrthemes', 'viridis', 'stargazer', 'knitr',
+          'kableExtra','patchwork',"xaringan", "xaringanthemer")
+
+# Instala e/ou atualiza pacotes
+install <- function(x) {
+  if (x %in% rownames(installed.packages()) == F) {
+    install.packages(x, dependencies = T,
+          repos = "http://cran.us.r-project.org")
+  }
+}
+
+# Carrega pacotes
+lapply(pkgs, install)
+lapply(pkgs, require, character.only = T)
+rm(pkgs, install)
+
+
+# Opções Xaringan
+options(htmltools.dir.version = FALSE)
+
+style_mono_accent(
+  base_color          = "#1c5253",
+  header_h1_font_size = "2.25rem",
+  header_h2_font_size = "1.85rem",
+  header_font_google  = google_font("Josefin Sans"),
+  text_font_google    = google_font("Montserrat", "300", "300i"),
+  text_font_size      = "1.25rem",
+  code_font_google    = google_font("Fira Mono")
+)
+
+
+
+# Carrega dados
+umapdat <- read_csv("dados/alteracao-estatuto-umap.csv")
+
+#similaritydat <- read_rds("dados/statute_similaritySD22.rds")
+
+similaritydat <- fst::read.fst("dados/abcp_statute_files.fst") %>%
+  select(party,contains("lopp"),-contains("lag"),-contains("jaro"),-contains("razao"))
+
+
+```
+
+
+# Tema de Pesquisa
+
+--
+
+* Tema amplo: como partidos diferem em seus estatutos partidários?
+
+--
+
+* Base Teórica:
+  - Smith e Gauja (2010): estatutos enquanto instituições.
+  - Grimmer (2013): textos como dados.
+
+--
+
+* Estatutos partidários: fonte de consulta ou objeto de pesquisa?
+
+--
+
+* O conjunto de instituições que conformam o partido não é mais "real" que o documento estatutário.
+  - São objetos distintos!
+  - Para o Brasil: ~180 estatutos para 32 partidos. <br> Faz sentido ser "letra morta"?
+
+
+---
+
+
+# Pressupostos Teóricos
+
+* Ribeiro (2013): comparando LOPP com estatutos PT, PSDB, PMDB, PFL/DEM.
+
+* Lei 5.682/1971 (LOPP): regras rígidas da estrutura organizativa.
+
+* Redemocratização: liberdade de escolha estrutura partidária.
+
+* Mas... Trechos ipsis literis da LOPP são encontrados no PMDB/PSDB/DEM.
+
+* PT como outsider seria o único com estatutos realmente distintos. 
+
+
+---
+
+
+# Pressupostos Teóricos [2]
+
+* Mingardi (2019, 2020): análise de similaridade de texto para 34 partidos e ~190 estatutos. 
+
+* Conclusão geral de Ribeiro (2013) se mantém: altíssima similaridade entre LOPP e estatutos.
+
+* Excepcionalismo petista? 
+  - Taxa similaridade PT em posição relativamente alta.
+  - Ainda não descobrimos o mecanismo causal: tamanho, ideologia, data de fundação, data do estatuto...
+  
+* Algumas conclusões: 
+  - Alta similaridade estatuto $_{(i, t)}$ e estatuto $_{(i, t-1)}$.
+  - Tendência global de diferenciação da LOPP.
+  - Tendência global de aumento do documento. <br> $\Rightarrow$ Sinal de institucionalização? (Scarrow, 2022)
+
+
+---
+
+
+# Motivações de pesquisa
+
+* Crítica constante: resultados interessantes mas pouco práticos. <br> O que aprendemos com estatutos?
+
+* Grimmer (2013): trade-off análise quanti vs leitura manual. 
+
+* Termo de compromisso: criar classificações teoricamente significativas.
+  - Literatura nacional pouco explorou o tema.
+  - Literatura internacional tem um tradeoff de nº casos x precisão.
+
+* Nesse paper: foco mudança institucional como teste pesquisa mais ampla.
+
+* Resumo dos resultados: redução dimensionalidade por UMAP.
+
+
+---
+
+
+# Mudança Institucional
+
+* Smith e Gauja (2010) mostram como mudanças textuais nos estatutos refletem mudanças de equilíbrio nas pressões intra e extra partidárias.
+
+* Alteração do estatuto é só 1 caso de um continuum (não rígido) de mudanças institucionais:
+  - Alterar estatuto -> Incorporar partido -> Fundir com partido -> Dissolver partido.
+
+* Estudo de caso: Mucinhato (2015), mudanças no PMDB a partir da absorção do Partido Popular do Tancredo.
+
+* Analisaremos as regras em si que legitimam tais alterações. 
+
+* Dimensões analisadas: locus discussão, regra maioria para legitimação, tipo de voto. 
+
+
+---
+
+
+# Similaridade Cosseno Q3 (Mingardi 2020)
+
+
+```{r similarity,out.width="55%"}
+
+similaritydat %>%
+  filter(party != "PMN") %>%
+  filter(cosine_char_q3_lopp >= 0.7) %>%
+  pivot_longer(-party) %>%
+  mutate(name = gsub("char_","",name),
+         name = gsub("_lopp","",name),
+         name = gsub("_"," ", name),
+         name = str_to_title(name)
+  ) %>%
+  mutate(party = recode(party,
+                        "REPUBLICANOS" = "REP",
+                        "CIDADANIA" = "CID",
+                        "PATRIOTA" = "PATRI"),
+         colorcase = ifelse(party %in% c("MDB","PT","PSDB","DEM"),"1","0"),
+         ) %>%
+  filter(name == "Cosine Q3") %>%
+  ggplot(aes(y = value, x = reorder(party,value), fill = colorcase)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("#FFFFFF","#1c5253")) +
+  labs(x="",y="") + 
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1,size = 14),
+        plot.title = element_text(size = 18,hjust = 0.5),
+        axis.text.y = element_text(size = 14),
+        strip.text = element_text(size = 18))
+  
+
+
+
+```
+
+
+---
+
+
+# Loci Discussão
+
+
+---
+
+
+# Loci Discussão
+
+
+```{r conv}
+dat = read_csv("dados/convencao_2.csv")
+
+kable(dat,
+#      caption = "Locus de Discussão de Alteração do Partido ou Estatuto",
+#     booktabs=F,escape=F
+) %>%
+#  column_spec(1:5,width = "3cm") %>%
+#  footnote(symbol = c("O Encontro Nacional é equivalente à Convenção Nacional para o PT. A Convenção Nacional no PSOL, REDE e UP recebe a denominação de Congresso Nacional."),
+#           threeparttable = TRUE) %>%
+  kable_styling(latex_options = "HOLD_position",
+                font_size = 17)
+
+```
+
+
+---
+
+
+# Regra Maioria Estatuto
+
+
+```{r majest}
+dat = read_csv("dados/maiora_estatuto.csv")
+
+kable(dat,
+#      caption = "Regra de Maioria para Alteração de Estatuto"
+      ) %>%
+#  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position",
+                font_size = 17)
+
+```
+
+---
+
+
+# Regra Maioria Fusão e Incorporação
+
+
+```{r majfusinc}
+dat = read_csv("dados/maiora_fusao_incorporacao.csv")
+
+kable(dat,
+#      caption = "Regra de Maioria para Alteração de Estatuto"
+      ) %>%
+#  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position",
+                font_size = 17)
+
+```
+
+
+---
+
+
+# Regra Maioria Dissolução
+
+
+```{r majdis}
+dat = read_csv("dados/maiora_dissolucao.csv")
+
+kable(dat,
+#      caption = "Regra de Maioria para Alteração de Estatuto"
+      ) %>%
+#  column_spec(1:2,width = "7cm") %>%
+  kable_styling(latex_options = "HOLD_position",
+                font_size = 17)
+
+```
+
+
+---
+
+
+# Tipo de Voto
+
+
+```{r vototipo}
+dat = read_csv("dados/voto_tipos_2.csv")
+
+kable(dat,
+#      caption = "Estatutos Partidários por Tipo de Voto",
+#      booktabs=F,escape=F
+) %>%
+#  column_spec(1:2,width = "8cm") %>%
+#  footnote(alphabet = c("Presidente DN com voto de Minerva.",
+#                      "Pode-se acumular até 2 votos somente.",
+#                      "Possibilidade de aclamação, caso haja consenso.",
+#                      "Permite declaração individual do voto."
+#                      )) %>%
+  kable_styling(latex_options = "HOLD_position",
+                font_size = 17)
+
+```
+
+
+---
+
+
+# UMAP
+
+* Ideia geral: dados tratados como n-variedade, queremos reduzir a espaço bidimensional.
+
+* Similar a outras técnicas de knn, mas melhor fundamentado. 
+
+* Teorema de Imersão de Nash: para cada variedade de Riemann há uma imersão em um espaço preservada isometricamente. 
+
+* Representação topológica fuzzy. 2 passos: aproximar o manifold dos dados, construir simplexos fuzzy que indexam a aplicação crescente.
+
+* Distância entre clusters é melhor preservada, e não só intra clusters. 
+
+* Cuidado: técnica de previsão, não de inferência. 
+
+* Pressupostos: i) Manifold é diferenciável e conectado localmente; ii) Métrica Riemanniana é (aproximadamente) localmente constante; iii) Termos estocásticos são i.i.d. localmente.
+
+
+---
+
+
+# UMAP [2]
+
+
+
+```{r resultadoumap,fig.retina=3}
+
+umapdat %>%
+  mutate(LOPP = ifelse(PARTIDO == "LOPP","1","0")) %>%
+  ggplot(aes(x=UMAP1,y=UMAP2)) +
+  geom_point(size = 2) +
+  labs(x="",y="", title = "Variação espacial da mudança institucional") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold",size = 20,hjust = 0.5),
+        axis.text.y = element_text(size = 14),
+        axis.text.x = element_text(size = 14)
+        )
+
+
+```
+
+
+---
+
+
+# UMAP [3]
+
+
+
+```{r umappartymean,fig.retina=3}
+
+umapdat %>%
+  group_by(PARTIDO) %>%
+  mutate(UMAP1.AVG = mean(UMAP1,na.rm=T),
+         UMAP2.AVG = mean(UMAP2,na.rm=T),
+         LOPP = ifelse(PARTIDO == "LOPP", "LOPP", "PARTIDOS")
+         ) %>%
+  distinct(UMAP1.AVG,.keep_all = T) %>%
+  ggplot(aes(x=UMAP1,y=UMAP2,label = PARTIDO)) +
+  geom_text(size = 5) +
+  labs(x="",y="",title = "Média dos Partidos") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold",size = 20,hjust = 0.5),
+        axis.text.y = element_text(size = 14),
+        axis.text.x = element_text(size = 14)
+        )
+
+```
+
+
+---
+
+
+# UMAP [4]
+
+
+```{r umappartyselec,fig.retina=3}
+
+umapdat %>%
+  mutate(LOPP = ifelse(PARTIDO == "LOPP", "LOPP", NA)) %>%
+  filter(PARTIDO %in% c("AGIR","PT","PSOL","PSD","PATRI","REP","AVANTE","SD","PSD","PL","CID","DC")) %>%
+  ggplot(aes(x=UMAP1,y=UMAP2,label = PARTIDO)) +
+  geom_text(size = 5) +
+  labs(x="",y="",title = "Partidos Selecionados") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold",size = 20,hjust = 0.5),
+        axis.text.y = element_text(size = 14),
+        axis.text.x = element_text(size = 14)
+        )
+
+```
+
+
+---
+
+
+# Conclusões 
+
+* Mudança Institucional varia pouco intra partido, mas há exceções com mudanças signicativas (AGIR, CID, PSD, etc).
+
+* Estatutos com grau de detalhamento textual/institucionalização diversos.
+
+* Mudança Institucional apresenta um cenário rico, porém pontual.
+
+* Leque de combinações possíveis bem variado ao longo dos partidos.
+
+  - Mas dentro de um universo fechado. Ainda continuam seguindo a lógica geral da LOPP, mesmo que para rejeitá-la.
+  
+  - Institutional borrowing: LOPP servindo de exemplo predecessor.
+
+* LOPP é caso paradigmático: fundamental para quem estuda estatutos no Brasil.
+
+---
+
+
+# Passos Futuros
+
+* Explorar mais dimensões organizativas: 
+
+  - Pronto: mudança institucional, regras filiação (Braga, 2020), membership fees, histórico (fusões, incorporações, legenda).
+  
+  - A fazer: regras seleção candidatos, distribuição Fundo Eleitoral. <br> Outras sugestões?
+
+* Adicionar partidos extintos pós-redemocratização.
+
+* Explorar melhor dimensão temporal.
+
+* Melhorar limpeza dos documentos. 
+
+* UMAP para taxa de similaridade, índices teóricos como fator de correção.
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# Obrigado! 
+
+---
+
+# Contatos
+
+<br>
+
+- [lucasmingardi@gmail.com](mailto:lucasmingardi@gmail.com)
+- <https://github.com/lumardi>
+

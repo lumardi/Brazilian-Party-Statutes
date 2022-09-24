@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Uma Breve Proposta de Avaliação das Regras de Mudança Institucional dos Partidos Brasileiros    </title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Lucas Mingardi  " />
+    <script src="Apresentação-SD-2022_files/header-attrs/header-attrs.js"></script>
+    <script src="Apresentação-SD-2022_files/kePrint/kePrint.js"></script>
+    <link href="Apresentação-SD-2022_files/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: middle, left, title-slide
+
+.title[
+# Uma Breve Proposta de Avaliação das Regras de Mudança Institucional dos Partidos Brasileiros<br><br><br><br>
+]
+.subtitle[
+## XII Seminário Discente do programa de pós-graduação em ciência política da USP
+]
+.author[
+### Lucas Mingardi<br><br>
+]
+.date[
+### 28/09/2022
+]
+
+---
+
+
+
+
+
+# Tema de Pesquisa
+
+--
+
+* Tema amplo: como partidos diferem em seus estatutos partidários?
+
+--
+
+* Base Teórica:
+  - Smith e Gauja (2010): estatutos enquanto instituições.
+  - Grimmer (2013): textos como dados.
+
+--
+
+* Estatutos partidários: fonte de consulta ou objeto de pesquisa?
+
+--
+
+* O conjunto de instituições que conformam o partido não é mais "real" que o documento estatutário.
+  - São objetos distintos!
+  - Para o Brasil: ~180 estatutos para 32 partidos. &lt;br&gt; Faz sentido ser "letra morta"?
+
+
+---
+
+
+# Pressupostos Teóricos
+
+* Ribeiro (2013): comparando LOPP com estatutos PT, PSDB, PMDB, PFL/DEM.
+
+* Lei 5.682/1971 (LOPP): regras rígidas da estrutura organizativa.
+
+* Redemocratização: liberdade de escolha estrutura partidária.
+
+* Mas... Trechos ipsis literis da LOPP são encontrados no PMDB/PSDB/DEM.
+
+* PT como outsider seria o único com estatutos realmente distintos. 
+
+
+---
+
+
+# Pressupostos Teóricos [2]
+
+* Mingardi (2019, 2020): análise de similaridade de texto para 34 partidos e ~190 estatutos. 
+
+* Conclusão geral de Ribeiro (2013) se mantém: altíssima similaridade entre LOPP e estatutos.
+
+* Excepcionalismo petista? 
+  - Taxa similaridade PT em posição relativamente alta.
+  - Ainda não descobrimos o mecanismo causal: tamanho, ideologia, data de fundação, data do estatuto...
+  
+* Algumas conclusões: 
+  - Alta similaridade estatuto `\(_{(i, t)}\)` e estatuto `\(_{(i, t-1)}\)`.
+  - Tendência global de diferenciação da LOPP.
+  - Tendência global de aumento do documento. &lt;br&gt; `\(\Rightarrow\)` Sinal de institucionalização? (Scarrow, 2022)
+
+
+---
+
+
+# Motivações de pesquisa
+
+* Crítica constante: resultados interessantes mas pouco práticos. &lt;br&gt; O que aprendemos com estatutos?
+
+* Grimmer (2013): trade-off análise quanti vs leitura manual. 
+
+* Termo de compromisso: criar classificações teoricamente significativas.
+  - Literatura nacional pouco explorou o tema.
+  - Literatura internacional tem um tradeoff de nº casos x precisão.
+
+* Nesse paper: foco mudança institucional como teste pesquisa mais ampla.
+
+* Resumo dos resultados: redução dimensionalidade por UMAP.
+
+
+---
+
+
+# Mudança Institucional
+
+* Smith e Gauja (2010) mostram como mudanças textuais nos estatutos refletem mudanças de equilíbrio nas pressões intra e extra partidárias.
+
+* Alteração do estatuto é só 1 caso de um continuum (não rígido) de mudanças institucionais:
+  - Alterar estatuto -&gt; Incorporar partido -&gt; Fundir com partido -&gt; Dissolver partido.
+
+* Estudo de caso: Mucinhato (2015), mudanças no PMDB a partir da absorção do Partido Popular do Tancredo.
+
+* Analisaremos as regras em si que legitimam tais alterações. 
+
+* Dimensões analisadas: locus discussão, regra maioria para legitimação, tipo de voto. 
+
+
+---
+
+
+# Similaridade Cosseno Q3 (Mingardi 2020)
+
+
+&lt;img src="Apresentação-SD-2022_files/figure-html/similarity-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+# Loci Discussão
+
+
+---
+
+
+# Loci Discussão
+
+
+&lt;table class="table" style="font-size: 17px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Instância Decisória &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Estatuto &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Fusão &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Incorporação &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Dissolução &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Convenção Nacional &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, AVANTE, CID, DC, MDB, PCdoB, PDT, PL, PMN, PODE, PP, PRTB, PSC, PSD, PSDB, PSOL, PT, PTB, PTC, PV, REP, UNIAO, UP &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, AVANTE, CID, DC, MDB, NOVO, PATRI, PDT, PL, PODE, PP, PROS, PRTB, PSC, PSD, PSDB, PSOL, PSTU, PTB, PTC, REP, SD, UNIAO &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, AVANTE, CID, DC, NOVO, PATRI, PDT, PL, PODE, PP, PROS, PRTB, PSC, PSD, PSDB, PSOL, PSTU, PTB, PTC, REP, SD, UNIAO &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, AVANTE, CID, DC, MDB, NOVO, PATRI, PCdoB, PDT, PL, PODE, PP, PROS, PSC, PSD, PSDB, PTB, PTC, REP, UNIAO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Convenção Nacional Extraordinária &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NOVO, PATRI, PCB, PMB, PROS, PSB, PSTU, SD &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCB, PMB, PSB, PV, UP &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCB, PMB, PSB, PV &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCB, PMB, PRTB, PSB, PSTU, PT, PV, SD &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Convenção Nacional + Referendo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Não Determinado &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCO &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCdoB, PCO, PMN, PT &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; MDB, PCdoB, PCO, PMN, PT, UP &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCO, PMN, PSOL, UP &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+
+# Regra Maioria Estatuto
+
+
+&lt;table class="table" style="font-size: 17px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Regra de Maioria &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Partido &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PATRI, PSTU, SD &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum 30% + Maioria Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, CID, DC, MDB, PCB, PCdoB, PL, PMN, PODE, PRTB, PSB, PSD, PSDB, PT, PTB, PV, REP, UP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PTC &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AVANTE, PMB, PSC &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta para criação Convenção. 2/3 Absoluto para Aprovação &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PROS &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto + Maioria Simples de Referendo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3/4 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NOVO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3/5 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PDT, UNIAO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum 1/3, Regra Escolhida em Convenção Anterior &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PSOL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Não Possui Dispositivo Alteração Estatuto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCO &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+
+# Regra Maioria Fusão e Incorporação
+
+
+&lt;table class="table" style="font-size: 17px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Regra de Maioria &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Partido &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PSTU &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum 30% + Maioria Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, MDB, PATRI, PSD, PSDB, PTB, REP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta Em 2 Votações &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PODE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum Maioria Absoluta + 60% Aprovação &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PV &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta + 1/5 Assinaturas Fundadores &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PRTB &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PTC &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AVANTE, CID, DC, PCB, PMB, PROS, PSB, PSC, SD, UP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto + Maioria Simples de Referendo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3/4 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3/5 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PDT, UNIAO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4/5 Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NOVO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum 1/3 + Regra Escolhida em Convenção Anterior &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PSOL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Não Possui Dispositivo Fusão/Incorporação &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCdoB, PCO, PMN, PT &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+
+# Regra Maioria Dissolução
+
+
+&lt;table class="table" style="font-size: 17px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Regra de Maioria &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Partido &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum 30% + Maioria Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; MDB, PATRI, PCdoB, PSD, PSDB, PTB, REP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maioria Absoluta em 2 Votações &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PODE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Quórum Maioria Absoluta + 60% Aprovação &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PV &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, AVANTE, CID, DC, PCB, PMB, PROS, PSB, PSTU, PT, PTC, SD &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto + 2/3 Assinaturas Fundadores &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PRTB &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2/3 Absoluto + Maioria Simples de Referendo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; REDE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3/4 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3/5 Absoluto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PDT, UNIAO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4/5 Simples &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NOVO &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Consenso &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PSC &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Não Possui Dispositivo Dissolução &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCO, PMN, PSOL, UP &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+
+# Tipo de Voto
+
+
+&lt;table class="table" style="font-size: 17px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Tipo de Voto &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Partido &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aberto, Cumulativo, Procuração (ACP) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PL, REP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aberto, Cumulativo, Sem Procuração (ACN) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PATRI, PRTB, SD, PDT &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aberto, Não Cumulativo, Procuração (ANP) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PODE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aberto, Não Cumulativo, Sem Procuração (ANN) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CID, PCB, PCdoB, PMN, PSDB &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Secreto, Cumulativo, Procuração (SCP) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PMB &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Secreto, Cumulativo, Sem Procuração (SCN) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; LOPP, AVANTE, PROS, PSD, PP &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Secreto, Não Cumulativo, Sem Procuração (SNN) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; DC, UP, UNIAO, PSC, PTC &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Secreto, Cumulativo, Sem Info. Procuração (SCI) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; MDB &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sem Info. Aberto/Secreto, Não Cumulativo, Sem Procuração (INN) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PTB &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Regimento Acordado em Convenção Anterior (R) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PSOL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sem Informação (III) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NOVO, PSB, PSTU, PT, PV, REDE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Não Possui Dispositivo (NA) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PCO &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+
+# UMAP
+
+* Ideia geral: dados tratados como n-variedade, queremos reduzir a espaço bidimensional.
+
+* Similar a outras técnicas de knn, mas melhor fundamentado. 
+
+* Teorema de Imersão de Nash: para cada variedade de Riemann há uma imersão em um espaço preservada isometricamente. 
+
+* Representação topológica fuzzy. 2 passos: aproximar o manifold dos dados, construir simplexos fuzzy que indexam a aplicação crescente.
+
+* Distância entre clusters é melhor preservada, e não só intra clusters. 
+
+* Cuidado: técnica de previsão, não de inferência. 
+
+* Pressupostos: i) Manifold é diferenciável e conectado localmente; ii) Métrica Riemanniana é (aproximadamente) localmente constante; iii) Termos estocásticos são i.i.d. localmente.
+
+
+---
+
+
+# UMAP [2]
+
+
+
+&lt;img src="Apresentação-SD-2022_files/figure-html/resultadoumap-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+# UMAP [3]
+
+
+
+&lt;img src="Apresentação-SD-2022_files/figure-html/umappartymean-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+# UMAP [4]
+
+
+&lt;img src="Apresentação-SD-2022_files/figure-html/umappartyselec-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+# Conclusões 
+
+* Mudança Institucional varia pouco intra partido, mas há exceções com mudanças signicativas (AGIR, CID, PSD, etc).
+
+* Estatutos com grau de detalhamento textual/institucionalização diversos.
+
+* Mudança Institucional apresenta um cenário rico, porém pontual.
+
+* Leque de combinações possíveis bem variado ao longo dos partidos.
+
+  - Mas dentro de um universo fechado. Ainda continuam seguindo a lógica geral da LOPP, mesmo que para rejeitá-la.
+  
+  - Institutional borrowing: LOPP servindo de exemplo predecessor.
+
+* LOPP é caso paradigmático: fundamental para quem estuda estatutos no Brasil.
+
+---
+
+
+# Passos Futuros
+
+* Explorar mais dimensões organizativas: 
+
+  - Pronto: mudança institucional, regras filiação (Braga, 2020), membership fees, histórico (fusões, incorporações, legenda).
+  
+  - A fazer: regras seleção candidatos, distribuição Fundo Eleitoral. &lt;br&gt; Outras sugestões?
+
+* Adicionar partidos extintos pós-redemocratização.
+
+* Explorar melhor dimensão temporal.
+
+* Melhorar limpeza dos documentos. 
+
+* UMAP para taxa de similaridade, índices teóricos como fator de correção.
+
+
+
+---
+
+
+class: center, middle, inverse
+
+# Obrigado! 
+
+---
+
+# Contatos
+
+&lt;br&gt;
+
+- [lucasmingardi@gmail.com](mailto:lucasmingardi@gmail.com)
+- &lt;https://github.com/lumardi&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:10",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
