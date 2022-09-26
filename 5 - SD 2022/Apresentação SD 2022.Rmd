@@ -152,7 +152,7 @@ similaritydat <- fst::read.fst("dados/abcp_statute_files.fst") %>%
 * Smith e Gauja (2010) mostram como mudanças textuais nos estatutos refletem mudanças de equilíbrio nas pressões intra e extra partidárias.
 
 * Alteração do estatuto é só 1 caso de um continuum (não rígido) de mudanças institucionais:
-  - Alterar estatuto -> Incorporar partido -> Fundir com partido -> Dissolver partido.
+  - Alterar estatuto -> Incorporar partido -> Fundir -> Dissolver partido.
 
 * Estudo de caso: Mucinhato (2015), mudanças no PMDB a partir da absorção do Partido Popular do Tancredo.
 
@@ -320,15 +320,15 @@ kable(dat,
 
 * Similar a outras técnicas de knn, mas melhor fundamentado. 
 
-* Teorema de Imersão de Nash: para cada variedade de Riemann há uma imersão em um espaço preservada isometricamente. 
+* Teorema de Imersão de Nash: para cada variedade de Riemann há uma imersão em um espaço preservada isometricamente (bijetoras). 
 
-* Representação topológica fuzzy. 2 passos: aproximar o manifold dos dados, construir simplexos fuzzy que indexam a aplicação crescente.
+* Representação topológica fuzzy. 2 passos: i) aproximar o manifold dos dados; ii) construir simplexos fuzzy indexando aplicação crescente.
 
 * Distância entre clusters é melhor preservada, e não só intra clusters. 
 
 * Cuidado: técnica de previsão, não de inferência. 
 
-* Pressupostos: i) Manifold é diferenciável e conectado localmente; ii) Métrica Riemanniana é (aproximadamente) localmente constante; iii) Termos estocásticos são i.i.d. localmente.
+* Pressupostos: i) Manifold é conectado localmente; ii) Métrica Riemanniana é (aproximadamente) localmente constante; iii) Termos estocásticos são i.i.d. localmente.
 
 
 ---
